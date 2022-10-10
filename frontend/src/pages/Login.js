@@ -34,7 +34,7 @@ const Login = (props) => {
             })
         };
 
-        fetch('/api/loginuser', requestOptions).then((response) => {
+        fetch('/api/loginaccount', requestOptions).then((response) => {
             console.log(response)
         })
     }

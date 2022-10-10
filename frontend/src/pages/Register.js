@@ -41,7 +41,7 @@ const Register = ({ }) => {
             })
         };
 
-        fetch('/api/registeruser', requestOptions).then((response) => {
+        fetch('/api/registeraccount', requestOptions).then((response) => {
             console.log(response)
         })
     }
