@@ -1,9 +1,11 @@
 import React from "react";
 import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = (props) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -35,7 +37,11 @@ const Login = (props) => {
         };
 
         fetch('/api/loginaccount', requestOptions).then((response) => {
-            console.log(response)
+            if(response.ok){
+                navigate("/", {replace: true})
+            } else {
+                alert("Invalid Credentials")
+            }
         })
     }
 
@@ -53,6 +59,7 @@ const Login = (props) => {
                 onChange={(e) => setPassword(e.target.value)}/>
             </div>
 
+            <p>Want to register an account instead? Click <Link to="/register">Here</Link></p>
             <input type='submit' value='Login' className="btn btn-block"/>
         </form>
     )

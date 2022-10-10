@@ -1,10 +1,12 @@
 import React from "react";
 import { useState } from 'react';
+import { useNavigate, Link } from "react-router-dom";
 
 const Register = ({ }) => {
     const [email, setEmail] = useState('')
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
+    const navigate = useNavigate();
 
     const onSubmit = (e) => {
         e.preventDefault()
@@ -42,7 +44,11 @@ const Register = ({ }) => {
         };
 
         fetch('/api/registeraccount', requestOptions).then((response) => {
-            console.log(response)
+            if (response.ok) {
+                navigate("/", {replace: true})
+            } else {
+                alert("Failed")
+            }
         })
     }
 
@@ -64,7 +70,7 @@ const Register = ({ }) => {
                 <input type='text' placeholder='Password' value={password}  
                 onChange={(e) => setPassword(e.target.value)}/>
             </div>
-
+            <p>Want to login to an existing account instead? Click <Link to="/login">Here</Link></p>
             <input type='submit' value='Register' className="btn btn-block"/>
         </form>
     )
