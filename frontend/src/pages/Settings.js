@@ -22,7 +22,7 @@ const Settings = ({ getCookie }) => {
       e.preventDefault()
       const csrftoken = getCookie('csrftoken');
 
-      const res = await fetch('/api/account/updatesettings', {
+      const res = await fetch('/api/account/settings', {
         method: "POST",
         headers: {
           'Content-type': 'application/json',
@@ -40,7 +40,7 @@ const Settings = ({ getCookie }) => {
     }
 
     const fetchAccountSettings = async () => {
-      const res = await fetch('/api/account/getsettings')
+      const res = await fetch('/api/account/settings')
       const data = await res.json()
 
       return data

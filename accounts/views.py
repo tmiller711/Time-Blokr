@@ -58,7 +58,8 @@ class LoginAccount(APIView):
 
         return Response({'Bad Request': "Invalid Data..."}, status=status.HTTP_400_BAD_REQUEST)
 
-class GetSettings(APIView):
+
+class AccountSettings(APIView):
     serializer_class = AccountSettingsSerializer
 
     def get(self, request, format=None):
@@ -66,9 +67,6 @@ class GetSettings(APIView):
         data = AccountSettingsSerializer(account).data
 
         return Response(data, status=status.HTTP_200_OK)
-
-class UpdateSettings(APIView):
-    serializer_class = AccountSettingsSerializer
 
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
@@ -82,7 +80,8 @@ class UpdateSettings(APIView):
 
         return Response({"Message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
 
-class GetProfile(APIView):
+
+class AccountProfile(APIView):
     serializer_class = AccountProfileSerializer
 
     def get(self, request, format=None):
@@ -94,7 +93,6 @@ class GetProfile(APIView):
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            print(serializer.data)
             user = request.user
             user.name = serializer.data.get('name')
             user.phone = serializer.data.get('phone')
