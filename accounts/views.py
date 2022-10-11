@@ -1,3 +1,4 @@
+from unicodedata import name
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework import generics, status
@@ -6,9 +7,12 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
 
 from .models import Account
-from .serializers import RegisterAccountSerializer, LoginAccountSerializer
+from .serializers import (RegisterAccountSerializer, LoginAccountSerializer, AccountSettingsSerializer,
+                        AccountProfileSerializer)
 
 # Create your views here.
 
@@ -44,8 +48,58 @@ class LoginAccount(APIView):
         password = request.data.get('password')
 
         if len(email) > 0 and len(password) > 0:
-            account = authenticate(request, email=email, password=password)
+            try:
+                account = authenticate(request, email=email, password=password)
+            except:
+                return Response({"Invalid Credentials": "Could not authenticate user"}, status=status.HTTP_404_NOT_FOUND)
+
             login(request, account)
-            return Response({"Logged In": "Good Stuff cuh"}, status=status.HTTP_200_OK)
+            return Response({"Logged In": "Good Stuff cuh"}, status=status.HTTP_202_ACCEPTED)
 
         return Response({'Bad Request': "Invalid Data..."}, status=status.HTTP_400_BAD_REQUEST)
+
+class GetSettings(APIView):
+    serializer_class = AccountSettingsSerializer
+
+    def get(self, request, format=None):
+        account = request.user
+        data = AccountSettingsSerializer(account).data
+
+        return Response(data, status=status.HTTP_200_OK)
+
+class UpdateSettings(APIView):
+    serializer_class = AccountSettingsSerializer
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            user.timezone = serializer.data.get('timezone')
+            user.wake_up_time = serializer.data.get("wake_up_time")
+            user.bedtime = serializer.data.get("bedtime")
+            user.save()
+            return Response({"Message": "Success"}, status=status.HTTP_200_OK)
+
+        return Response({"Message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+
+class GetProfile(APIView):
+    serializer_class = AccountProfileSerializer
+
+    def get(self, request, format=None):
+        account = request.user
+        data = AccountProfileSerializer(account).data
+
+        return Response(data, status=status.HTTP_200_OK)
+
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            print(serializer.data)
+            user = request.user
+            user.name = serializer.data.get('name')
+            user.phone = serializer.data.get('phone')
+            user.save()
+            return Response({"Message": "Success"}, status=status.HTTP_200_OK)
+
+        return Response({"Message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+

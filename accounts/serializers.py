@@ -13,3 +13,13 @@ class LoginAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('email', 'password')
+
+class AccountSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('timezone', 'wake_up_time', 'bedtime')
+
+class AccountProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('name', 'phone')

@@ -36,7 +36,7 @@ const Login = (props) => {
             })
         };
 
-        fetch('/api/loginaccount', requestOptions).then((response) => {
+        fetch('/api/account/loginaccount', requestOptions).then((response) => {
             if(response.ok){
                 navigate("/", {replace: true})
             } else {

@@ -55,6 +55,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # 'timeblokr.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'timeblokr.urls'
@@ -124,6 +126,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
+LOGIN_URL = '/login'
+LOGIN_EXEMPT_URLS = (
+    r'^logout/$',
+    r'^register/$',
+    r'^activate/',
+    r'^resend_confirmation/$',
+    r'^password_reset/$',
+    r'^reset/',
+    r'^api/loginaccount$',
+    r'^/api/registeraccount$',
+)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

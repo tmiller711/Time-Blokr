@@ -11,6 +11,22 @@ import Register from "./pages/Register"
 
 function App() {
 
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+        }
+
     return (
         <>
             <Routes>
@@ -20,8 +36,8 @@ function App() {
                 </Route>
                 <Route element={<WithNav />}>
                     <Route path="/" element={<h1>Home Page</h1>} />
-                    <Route path="/profile" element={<Profile />} />
-                    <Route path="/settings" element={<Settings />} />
+                    <Route path="/profile" element={<Profile getCookie={getCookie} />} />
+                    <Route path="/settings" element={<Settings getCookie={getCookie} />} />
                 </Route>
             </Routes>
         </>

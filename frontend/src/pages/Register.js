@@ -39,11 +39,11 @@ const Register = ({ }) => {
             body: JSON.stringify({
                 email: email,
                 username: username,
-                password, password
+                password: password
             })
         };
 
-        fetch('/api/registeraccount', requestOptions).then((response) => {
+        fetch('/api/account/registeraccount', requestOptions).then((response) => {
             if (response.ok) {
                 navigate("/", {replace: true})
             } else {

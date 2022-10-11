@@ -62,7 +62,9 @@ const SideNav = (props) => {
                             <div className="job">Being Gay</div>
                         </div>
                     </div>
-                    <i class='bx bx-log-out' id="log_out"></i>
+                    <a href="/logout">
+                        <i class='bx bx-log-out' id="log_out" color="white"></i>
+                    </a>
                 </div>
             </div>
         </div>
