@@ -1,5 +1,7 @@
 from django.urls import path
 
-urlpatterns = [
+from .views import GetBlocks
 
+urlpatterns = [
+    path("getblocks", GetBlocks.as_view())
 ]

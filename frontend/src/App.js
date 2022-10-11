@@ -8,6 +8,7 @@ import WithNav from "./components/WithNav";
 import WithoutNav from "./components/WithoutNav"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
+import Day from "./pages/Day"
 
 function App() {
 
@@ -35,7 +36,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                 </Route>
                 <Route element={<WithNav />}>
-                    <Route path="/" element={<h1>Home Page</h1>} />
+                    <Route path="/" element={<Day />} />
                     <Route path="/profile" element={<Profile getCookie={getCookie} />} />
                     <Route path="/settings" element={<Settings getCookie={getCookie} />} />
                 </Route>

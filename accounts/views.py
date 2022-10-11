@@ -6,9 +6,6 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-from rest_framework.permissions import IsAuthenticated
 
 from .models import Account
 from .serializers import (RegisterAccountSerializer, LoginAccountSerializer, AccountSettingsSerializer,
