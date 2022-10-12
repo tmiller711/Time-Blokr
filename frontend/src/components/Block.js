@@ -1,13 +1,17 @@
-import React from "react"
-import { useState } from "react"
+import React, { useEffect } from "react"
+import { useState, useCallback } from "react"
 
-const Block = ({ block }) => {
+const Block = ({ block, onTopicChange }) => {
+    
+    const handleOnChange = useCallback((event) => {
+        onTopicChange(block.id, event.target.value);
+    }, [block.id]);
+
     return (
         <div className="block">
-            <h3>{block.topic}</h3>
-            <h4>{block.start_time}</h4>
-            <h4>{block.end_time}</h4>
-            <br></br>
+            <input type="text" name="topic" value={block.topic} onChange={handleOnChange}></input>
+            <h4>{block.start_time} - {block.end_time}</h4>
+            <hr class="dashed" />
         </div>
     )
 }

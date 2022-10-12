@@ -1,12 +1,45 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Blocks from "../components/Blocks"
 
-const Day = (props) => {
+const Day = ({ getCookie }) => {
+    const [wakeUpTime, setWakeUpTime] = useState('')
+    const [bedtime, setBedtime] = useState('')
+
+    useEffect(() => {
+        const getTimes = async () => {
+            const accountTimes = await fetchTimes()
+            setWakeUpTime(accountTimes.wake_up_time)
+            setBedtime(accountTimes.bedtime)
+        }
+
+        getTimes()
+    }, [])
+
+    const fetchTimes = async () => {
+        const res = await fetch('/api/account/settings')
+        const data = await res.json()
+
+        return data
+    }
+
+    const addBlock = () => {
+        console.log("add block")
+    }
+
     return (
         <div className="day-view">
+            <div className="wake-up-time">
+                <h2>Wake up: {wakeUpTime}</h2>
+                <br></br>
+            </div>
             <div className="blocks">
-                <Blocks />
+                <Blocks getCookie={getCookie} />
+            </div>
+            {/* <button type="submit" name="update-block" onClick={updateBlocks}>Update</button>
+            <button type="submit" name="add-block" onClick={addBlock}>Add Block</button> */}
+            <div className="bedtime">
+                <h2>Sleep: {bedtime}</h2>
             </div>
         </div>
     )

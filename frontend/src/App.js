@@ -36,7 +36,7 @@ function App() {
                     <Route path="/register" element={<Register />} />
                 </Route>
                 <Route element={<WithNav />}>
-                    <Route path="/" element={<Day />} />
+                    <Route path="/" element={<Day getCookie={getCookie} />} />
                     <Route path="/profile" element={<Profile getCookie={getCookie} />} />
                     <Route path="/settings" element={<Settings getCookie={getCookie} />} />
                 </Route>
