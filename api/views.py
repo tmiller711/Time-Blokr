@@ -33,3 +33,17 @@ class UpdateBlocks(APIView):
             block_lookup.save()
 
         return Response({"Success": "Updated blocks"}, status=status.HTTP_200_OK)
+
+class DeleteBlock(APIView):
+
+    def delete(self, request, *args, **kwargs):
+        id = self.kwargs['id']
+        block = Block.objects.get(id=id)
+        print(block)
+        if not block:
+            # if we couldn't find a block with that id
+            return Response({"Bad Request": f"No Block with ID: {id}"}, status=status.HTTP_404_NOT_FOUND)
+
+        block.delete()
+
+        return Response({"Success": "Deleted block"}, status=status.HTTP_200_OK)

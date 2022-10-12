@@ -49,13 +49,34 @@ const Blocks = ({ getCookie }) => {
         const data = await res.json()
     }
 
+    const deleteBlock = async (id) => {
+        // e.preventDefault()
+        const csrftoken = getCookie('csrftoken');
+        // make a delete request to the server
+        const res = await fetch(`/api/deleteblock/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': csrftoken
+            }
+        })
+
+        // set the new blocks
+        setBlocks(blocks.filter((block) => block.id !== id))
+    }
+
+    const addBlock = () => {
+        console.log("add block")
+    }
+
     return (
         <form onSubmit={updateBlocks}>
-            {blocks.map((block) => (
-                <Block key={block.id} block={block} onTopicChange={handleTopicChange} />
-            ))}
+            {blocks.length > 0 ? blocks.map((block) => (
+                <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} />
+            )) : <h2>No Blocks to Display</h2>}
+
 
             <input type="submit" value="update"></input>
+            <button type="submit" name="add-block" onClick={addBlock}>Add Block</button>
         </form>
     )
 }

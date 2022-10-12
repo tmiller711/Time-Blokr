@@ -1,8 +1,9 @@
 import React, { useEffect } from "react"
 import { useState, useCallback } from "react"
+import { FaTimes } from 'react-icons/fa'
 
-const Block = ({ block, onTopicChange }) => {
-    
+const Block = ({ block, onTopicChange, onDelete }) => {
+
     const handleOnChange = useCallback((event) => {
         onTopicChange(block.id, event.target.value);
     }, [block.id]);
@@ -10,6 +11,7 @@ const Block = ({ block, onTopicChange }) => {
     return (
         <div className="block">
             <input type="text" name="topic" value={block.topic} onChange={handleOnChange}></input>
+            <FaTimes onClick={() => onDelete(block.id)} />
             <h4>{block.start_time} - {block.end_time}</h4>
             <hr class="dashed" />
         </div>

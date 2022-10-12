@@ -23,10 +23,6 @@ const Day = ({ getCookie }) => {
         return data
     }
 
-    const addBlock = () => {
-        console.log("add block")
-    }
-
     return (
         <div className="day-view">
             <div className="wake-up-time">
@@ -36,8 +32,7 @@ const Day = ({ getCookie }) => {
             <div className="blocks">
                 <Blocks getCookie={getCookie} />
             </div>
-            {/* <button type="submit" name="update-block" onClick={updateBlocks}>Update</button>
-            <button type="submit" name="add-block" onClick={addBlock}>Add Block</button> */}
+            
             <div className="bedtime">
                 <h2>Sleep: {bedtime}</h2>
             </div>
