@@ -1,5 +1,6 @@
 import React from "react";
 import {Routes, Route, useNavigate, Link} from 'react-router-dom';
+import '../css/sidenav.css';
 
 const SideNav = (props) => {
     const navigate = useNavigate();

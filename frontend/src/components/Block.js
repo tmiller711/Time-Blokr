@@ -10,8 +10,8 @@ const Block = ({ block, onTopicChange, onDelete }) => {
 
     return (
         <div className="block">
-            <input type="text" name="topic" value={block.topic} onChange={handleOnChange}></input>
-            <FaTimes onClick={() => onDelete(block.id)} />
+            <input type="text" name="topic" className="block-topic" value={block.topic} onChange={handleOnChange}></input>
+            <FaTimes className="delete-btn" onClick={() => onDelete(block.id)} />
             <h4>{block.start_time} - {block.end_time}</h4>
             <hr class="dashed" />
         </div>

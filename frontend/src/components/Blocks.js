@@ -1,9 +1,15 @@
 import React from "react";
 import { useState, useEffect, useCallback } from "react";
 import Block from './Block'
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import "../css/blocks.css"
+import Form from 'react-bootstrap/Form';
+import AddBlockModal from "./AddBlockModal";
 
 const Blocks = ({ getCookie }) => {
     const [blocks, setBlocks] = useState([])
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         const getBlocks = async () => {
@@ -13,6 +19,15 @@ const Blocks = ({ getCookie }) => {
 
         getBlocks()
     }, []);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    // function that calls two functions
+    const onSave = () => {
+        handleClose()
+        addBlock()
+    }
 
     const fetchBlocks = async () => {
         const res = await fetch("/api/getblocks")
@@ -70,13 +85,19 @@ const Blocks = ({ getCookie }) => {
 
     return (
         <form onSubmit={updateBlocks}>
-            {blocks.length > 0 ? blocks.map((block) => (
-                <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} />
-            )) : <h2>No Blocks to Display</h2>}
+            <div className="blocks">
+                    
+                {blocks.length > 0 ? blocks.map((block) => (
+                    <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} />
+                )) : <h2>No Blocks to Display</h2>}
 
+                <Button type="submit" variant="secondary">Update</Button>
+                <Button variant="primary" name="add-block" onClick={handleShow}>Add Block</Button>
 
-            <input type="submit" value="update"></input>
-            <button type="submit" name="add-block" onClick={addBlock}>Add Block</button>
+            </div>
+
+            {show === true ? <AddBlockModal show={show} handleClose={handleClose} handleSave={onSave} /> : null}
+
         </form>
     )
 }

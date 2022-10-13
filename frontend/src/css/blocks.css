@@ -1,0 +1,11 @@
+.blocks {
+    width: 300px;
+}
+
+.block-topic {
+    width: 280px;
+}
+
+.delete-btn {
+    color: red;
+}

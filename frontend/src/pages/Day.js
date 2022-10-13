@@ -27,7 +27,6 @@ const Day = ({ getCookie }) => {
         <div className="day-view">
             <div className="wake-up-time">
                 <h2>Wake up: {wakeUpTime}</h2>
-                <br></br>
             </div>
             <div className="blocks">
                 <Blocks getCookie={getCookie} />
