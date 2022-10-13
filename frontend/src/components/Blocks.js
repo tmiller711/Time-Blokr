@@ -96,11 +96,8 @@ const Blocks = ({ getCookie }) => {
         })
 
         const data = await res.json()
-        console.log(data)
-        console.log(blocks)
 
         setBlocks([...blocks, data])
-        console.log(blocks)
     }
 
     return (

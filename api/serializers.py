@@ -6,3 +6,8 @@ class BlocksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Block
         fields = ('id', 'topic', 'start_time', 'end_time')
+
+class CreateBlocksSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Block
+        fields = ('topic', 'start_time', 'end_time')

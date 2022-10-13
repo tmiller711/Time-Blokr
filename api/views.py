@@ -4,8 +4,9 @@ from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
+from datetime import timedelta, datetime
 
-from .serializers import BlocksSerializer
+from .serializers import BlocksSerializer, CreateBlocksSerializer
 from .models import Block
 
 
@@ -47,3 +48,33 @@ class DeleteBlock(APIView):
         block.delete()
 
         return Response({"Success": "Deleted block"}, status=status.HTTP_200_OK)
+
+class CreateBlock(APIView):
+    serializer_class = CreateBlocksSerializer
+
+    def post(self, request, format=None):
+        try:
+            end_time = (datetime.strptime(request.data['start_time'], "%H:%M") + timedelta(hours=int(request.data['length']))).time()
+        except:
+            return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
+            
+        del request.data['length']
+        request.data['end_time'] = end_time
+        serializer = self.serializer_class(data=request.data)
+
+        if serializer.is_valid():
+            topic = serializer.data.get('topic')
+            start_time = serializer.data.get('start_time')
+            end_time = serializer.data.get("end_time")
+
+            # change date to take in an argument from the backend in the body through the JSON data it passes
+            date = datetime.today()
+
+            new_block = Block(user=request.user, topic=topic, start_time=start_time, end_time=end_time, date=date)
+            new_block.save()
+
+            new_block_data = BlocksSerializer(new_block).data
+
+            return Response(new_block_data, status=status.HTTP_201_CREATED)
+
+        return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
