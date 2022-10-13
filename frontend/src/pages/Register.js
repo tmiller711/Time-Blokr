@@ -1,6 +1,9 @@
 import React from "react";
 import { useState } from 'react';
 import { useNavigate, Link } from "react-router-dom";
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import "../css/registration.css"
 
 const Register = ({ }) => {
     const [email, setEmail] = useState('')
@@ -54,25 +57,30 @@ const Register = ({ }) => {
 
 
     return (
-        <form onSubmit={onSubmit}>
-            <div className='form-control'>
-                <label>Email</label>
-                <input type='text' placeholder="Email"
-                value={email} onChange={(e) => setEmail(e.target.value)} />
-            </div>
-            <div className='form-control'>
-                <label>Username</label>
-                <input type='text' placeholder='Username' 
-                value={username} onChange={(e) => setUsername(e.target.value)} />
-            </div>
-            <div className='form-control form-control-check'>
-                <label>Password</label>
-                <input type='text' placeholder='Password' value={password}  
-                onChange={(e) => setPassword(e.target.value)}/>
-            </div>
-            <p>Want to login to an existing account instead? Click <Link to="/login">Here</Link></p>
-            <input type='submit' value='Register' className="btn btn-block"/>
-        </form>
+        <div className="register-form">
+            <Form onSubmit={onSubmit}>
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Email address</Form.Label>
+                    <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)}/>
+                    <Form.Text className="text-muted">
+                    We'll never share your email with anyone else.
+                    </Form.Text>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicEmail">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)}/>
+                </Form.Group>
+
+                <Form.Group className="mb-3" controlId="formBasicPassword">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)}/>
+                </Form.Group>
+
+                <p>Want to login to an existing account instead? Click <Link to="/login">Here</Link></p>
+                <Button type='submit' className="btn btn-block">Register</Button>
+            </Form>
+        </div>
     )
 }
 

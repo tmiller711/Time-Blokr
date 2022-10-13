@@ -19,4 +19,12 @@ body {
     left: 78px;
     padding-left: 10px;
     transition: all 0.5s ease;
+    background-color: #E4E5EA;
+}
+
+.registration {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #E4E5EA;
 }
