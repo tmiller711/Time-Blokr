@@ -1,5 +1,8 @@
 import React from "react"
 import { useState, useEffect } from "react"
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import "../css/settings.css"
 
 const Settings = ({ getCookie }) => {
     const [timezone, setTimezone] = useState('')
@@ -47,26 +50,35 @@ const Settings = ({ getCookie }) => {
     }
 
     return (
-      <form onSubmit={onSubmit}>
-          <div className='form-control' onChange={(e) => setTimezone(e.target.value)}>
-            <label>Timezone</label>
-            <select name="timezone" value={timezone}>
-              <option value="America/Chicago">America/Chicago</option>
-              <option value="America/New_York">America/New York</option>
-              <option value="America/Denver">America/Denver</option>
-              <option value="America/Los_Angeles">America/Los Angeles</option>
-            </select>
-          </div>
-          <div className='wake-up-time' onChange={(e) => setWakeUpTime(e.target.value)}>
-            <label>Wake Up Time</label>
-            <input type="time" name="wake_up_time" value={wakeUpTime}></input>
-          </div>
-          <div className='bedime' onChange={(e) => setBedtime(e.target.value)}>
-            <label>Bedtime</label>
-            <input type="time" name="bedtime" value={bedtime}></input>
-          </div>
-          <input type='submit' value='Save' className="btn btn-block"/>
-      </form>
+      <div className="settings">
+        <Form onSubmit={onSubmit}>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Timezone</Form.Label>
+              <Form.Select aria-label="Default select example" onChange={(e) => setTimezone(e.target.value)}>
+                <option value="America/Chicago">America/Chicago</option>
+                <option value="America/New_York">America/New York</option>
+                <option value="America/Denver">America/Denver</option>
+                <option value="America/Los_Angeles">America/Los Angeles</option>
+              </Form.Select>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Wake Up Time</Form.Label>
+              <Form.Control
+                  type="time"
+                  onChange={(e) => setWakeUpTime(e.target.value)}
+              />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+              <Form.Label>Bedtime</Form.Label>
+              <Form.Control
+                  type="time"
+                  onChange={(e) => setBedtime(e.target.value)}
+              />
+          </Form.Group>
+
+          <Button type='submit' className="btn btn-block">Save</Button>
+        </Form>
+      </div>
     )
 }
 
