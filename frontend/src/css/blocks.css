@@ -6,6 +6,17 @@
     width: 280px;
 }
 
+.input-group-text {
+    height: 37px;
+    color: yellow;
+    cursor: pointer;
+}
+
 .delete-btn {
     color: red;
+    height: 15px;
+}
+
+.dashed {
+    height: 10px;
 }

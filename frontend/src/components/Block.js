@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { useState, useCallback } from "react"
 import { FaTimes } from 'react-icons/fa'
+import Form from 'react-bootstrap/Form';
 
 const Block = ({ block, onTopicChange, onDelete }) => {
 
@@ -9,12 +10,26 @@ const Block = ({ block, onTopicChange, onDelete }) => {
     }, [block.id]);
 
     return (
-        <div className="block">
-            <input type="text" name="topic" className="block-topic" value={block.topic} onChange={handleOnChange}></input>
-            <FaTimes className="delete-btn" onClick={() => onDelete(block.id)} />
+        <Form.Group className="mb-3" controlId="validationCustom01">
+            <div class="input-group mb-3">
+                <Form.Control
+                    className="block"
+                    type="topic"
+                    placeholder=""
+                    autoFocus
+                    required
+                    value={block.topic}
+                    onChange={handleOnChange}
+                    />
+                    <div class="input-group-append">
+                    <div class="input-group-text">
+                        <FaTimes className="delete-btn" onClick={() => onDelete(block.id)} />
+                    </div>
+                </div>
+            </div>
             <h4>{block.start_time} - {block.end_time}</h4>
             <hr class="dashed" />
-        </div>
+        </Form.Group>
     )
 }
 

@@ -101,7 +101,7 @@ const Blocks = ({ getCookie }) => {
     }
 
     return (
-        <form onSubmit={updateBlocks}>
+        <Form onSubmit={updateBlocks}>
             <div className="blocks">
                     
                 {blocks.length > 0 ? blocks.map((block) => (
@@ -115,7 +115,7 @@ const Blocks = ({ getCookie }) => {
 
             {show === true ? <AddBlockModal show={show} handleClose={handleClose} handleSave={onSave} /> : null}
 
-        </form>
+        </Form>
     )
 }
 
