@@ -1,9 +1,18 @@
 import React from "react"
+import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
 const AddBlockModal = ({ show, handleClose, handleSave }) => {
+    const [topic, setTopic] = useState('')
+    const [startTime, setStartTime] = useState('')
+    const [length, setLength] = useState('1')
+
+    const onSubmit = () => {
+        handleSave(topic, startTime, length)
+    }
+
     return (
         <>
             <Modal show={show} onHide={handleClose}>
@@ -18,6 +27,7 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
                             type="topic"
                             placeholder=""
                             autoFocus
+                            onChange={(e) => setTopic(e.target.value)}
                         />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
@@ -26,11 +36,12 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
                             type="time"
                             placeholder=""
                             autoFocus
+                            onChange={(e) => setStartTime(e.target.value)}
                         />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
                             <Form.Label>Length</Form.Label>
-                            <Form.Select aria-label="Default select example">
+                            <Form.Select aria-label="Default select example" onChange={(e) => setLength(e.target.value)}>
                             <option value="1">1 Hr</option>
                             <option value="2">2 Hrs</option>
                             <option value="3">3 Hrs</option>
@@ -42,7 +53,7 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Close
                 </Button>
-                <Button variant="primary" onClick={handleSave}>
+                <Button variant="primary" onClick={() => onSubmit()}>
                     Save Changes
                 </Button>
                 </Modal.Footer>

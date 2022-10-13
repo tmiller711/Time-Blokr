@@ -24,9 +24,9 @@ const Blocks = ({ getCookie }) => {
     const handleShow = () => setShow(true);
 
     // function that calls two functions
-    const onSave = () => {
+    const onSave = (topic, startTime, length) => {
         handleClose()
-        addBlock()
+        addBlock(topic, startTime, length)
     }
 
     const fetchBlocks = async () => {
@@ -79,8 +79,28 @@ const Blocks = ({ getCookie }) => {
         setBlocks(blocks.filter((block) => block.id !== id))
     }
 
-    const addBlock = () => {
-        console.log("add block")
+    const addBlock = async (topic, startTime, length) => {
+        // send post request to server
+        const csrftoken = getCookie('csrftoken');
+        const res = await fetch('/api/createblock', {
+            method: 'POST',
+            headers: {
+                'Content-type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                topic: topic,
+                start_time: startTime,
+                length: length
+            })
+        })
+
+        const data = await res.json()
+        console.log(data)
+        console.log(blocks)
+
+        setBlocks([...blocks, data])
+        console.log(blocks)
     }
 
     return (
@@ -89,7 +109,7 @@ const Blocks = ({ getCookie }) => {
                     
                 {blocks.length > 0 ? blocks.map((block) => (
                     <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} />
-                )) : <h2>No Blocks to Display</h2>}
+                )) : <h2 style={{color: 'blue'}}>No Blocks to Display</h2>}
 
                 <Button type="submit" variant="secondary">Update</Button>
                 <Button variant="primary" name="add-block" onClick={handleShow}>Add Block</Button>
