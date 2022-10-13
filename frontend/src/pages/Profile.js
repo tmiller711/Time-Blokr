@@ -1,5 +1,8 @@
 import React from "react"
 import { useState, useEffect } from "react"
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
+import "../css/profile.css"
 
 const Profile = ({ getCookie }) => {
     const [name, setName] = useState('')
@@ -44,20 +47,34 @@ const Profile = ({ getCookie }) => {
     }
 
     return (
-        <form onSubmit={onSubmit}>
-            <div className='form-control' onChange={(e) => setName(e.target.value)}>
-                <label>Name</label>
-                <input type="text" value={name}></input>
-            </div>
-            <div className='form-control' onChange={(e) => setPhoneNumber(e.target.value)}>
-                <label>Phone Number</label>
-                <input type="text" value={phoneNumber}></input>
-            </div>
+        <div className="profile-form">
+            <Form onSubmit={onSubmit}>
+                <Form.Group className="mb-3" controlId="validationCustom01">
+                    <Form.Label>Name</Form.Label>
+                    <Form.Control
+                        type="text"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                    Please input a valid topic name
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="validationCustom01">
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                        type="text"
+                        value={phoneNumber}
+                        onChange={(e) => setPhoneNumber(e.target.value)}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                    Please input a valid topic name
+                    </Form.Control.Feedback>
+                </Form.Group>
 
-            <input type="submit" value="Save" className="btn btn-block" />
-        </form>
-
-
+                <Button type="submit" className="btn btn-block">Save</Button>
+            </Form>
+        </div>
     )
 }
 

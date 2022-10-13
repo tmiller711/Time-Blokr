@@ -28,7 +28,7 @@ const Block = ({ block, onTopicChange, onDelete }) => {
                 </div>
             </div>
             <h4>{block.start_time} - {block.end_time}</h4>
-            <hr class="dashed" />
+            <hr className="dashed"/>
         </Form.Group>
     )
 }
