@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
 from datetime import timedelta, datetime
+import pytz
 
 from .serializers import BlocksSerializer, CreateBlocksSerializer
 from .models import Block
@@ -78,3 +79,11 @@ class CreateBlock(APIView):
             return Response(new_block_data, status=status.HTTP_201_CREATED)
 
         return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
+
+class GetTime(APIView):
+
+    def get(self, request, format=None):
+        cur_time = pytz.timezone(request.user.timezone)
+        standard_time = datetime.now(cur_time).strftime("%-I:%M%p")
+
+        return Response({"time": standard_time}, status=status.HTTP_200_OK)

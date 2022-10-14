@@ -1,9 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {Routes, Route, useNavigate, Link} from 'react-router-dom';
 import '../css/sidenav.css';
 
 const SideNav = (props) => {
     const navigate = useNavigate();
+    const [time, setTime] = useState('');
+    const [username, setUsername] = useState('');
+    const [name, setName] = useState('');
+
+    useEffect(() => {
+        const getAccountSettings = async () => {
+            const res = await fetch('/api/account/getuser')
+            const data = await res.json()
+
+            setUsername(data.username)
+            setName(data.name)
+        }
+
+        // const getTime = async () => {
+        //     const res = await fetch('/api/gettime')
+        //     const data = await res.json()
+    
+        //     setTime(data.time)
+        // }
+
+        getTime()
+        getAccountSettings()
+        // getTime()
+    }, [])
 
     const changeSideNavClass = () => {
         let sideNav = document.querySelector(".sidenav");
@@ -15,6 +39,18 @@ const SideNav = (props) => {
         searchBtn.classList.toggle("active");
     }
 
+    const getTime = async () => {
+        console.log("getting time")
+        const res = await fetch('/api/gettime')
+        const data = await res.json()
+
+        setTime(data.time)
+
+        setTimeout(() => {
+            getTime()
+        }, 30000)
+    }
+
     return (
         <>
         <div className="sidenav">
@@ -24,6 +60,9 @@ const SideNav = (props) => {
                     <div className="logo_name">TimeBlokr</div>
                 </div>
                 <i class='bx bx-menu' id="btn" onClick={changeSideNavClass}></i>
+            </div>
+            <div className="time">
+                <h1>{time}</h1>
             </div>
             <ul className="nav_list">
                 <li>
@@ -59,8 +98,8 @@ const SideNav = (props) => {
                         {/* figure out how to get static files */}
                         <img src="static/images/test.png"></img>
                         <div className="name_job">
-                            <div className="name">Tristin Miller</div>
-                            <div className="job">Being Gay</div>
+                            <div className="name">{name}</div>
+                            <div className="job">{username}</div>
                         </div>
                     </div>
                     <a href="/logout">

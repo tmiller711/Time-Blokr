@@ -54,7 +54,7 @@ const Settings = ({ getCookie }) => {
         <Form onSubmit={onSubmit}>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Timezone</Form.Label>
-              <Form.Select aria-label="Default select example" onChange={(e) => setTimezone(e.target.value)}>
+              <Form.Select aria-label="Default select example" value={timezone} onChange={(e) => setTimezone(e.target.value)}>
                 <option value="America/Chicago">America/Chicago</option>
                 <option value="America/New_York">America/New York</option>
                 <option value="America/Denver">America/Denver</option>
@@ -65,6 +65,7 @@ const Settings = ({ getCookie }) => {
               <Form.Label>Wake Up Time</Form.Label>
               <Form.Control
                   type="time"
+                  value={wakeUpTime}
                   onChange={(e) => setWakeUpTime(e.target.value)}
               />
           </Form.Group>
@@ -72,6 +73,7 @@ const Settings = ({ getCookie }) => {
               <Form.Label>Bedtime</Form.Label>
               <Form.Control
                   type="time"
+                  value={bedtime}
                   onChange={(e) => setBedtime(e.target.value)}
               />
           </Form.Group>

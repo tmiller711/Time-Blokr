@@ -1,3 +1,4 @@
+import re
 from unicodedata import name
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -98,3 +99,8 @@ class AccountProfile(APIView):
 
         return Response({"Message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
 
+class GetUser(APIView):
+
+    def get(self, request, format=None):
+        data = {"username": request.user.username, "name": request.user.name}
+        return JsonResponse(data, status=status.HTTP_200_OK)
