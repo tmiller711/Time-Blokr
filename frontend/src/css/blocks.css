@@ -7,12 +7,5 @@
 }
 
 .input-group-text {
-    height: 37px;
-    color: yellow;
     cursor: pointer;
-}
-
-.delete-btn {
-    color: red;
-    height: 15px;
 }

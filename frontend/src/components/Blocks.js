@@ -101,14 +101,13 @@ const Blocks = ({ getCookie }) => {
     }
 
     return (
-        <Form onSubmit={updateBlocks}>
+        <Form>
             <div className="blocks">
                     
                 {blocks.length > 0 ? blocks.map((block) => (
-                    <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} />
+                    <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} onUpdate={updateBlocks} />
                 )) : <h2 style={{color: 'blue'}}>No Blocks to Display</h2>}
 
-                <Button type="submit" variant="secondary">Update</Button>
                 <Button variant="primary" name="add-block" onClick={handleShow}>Add Block</Button>
 
             </div>

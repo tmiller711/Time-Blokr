@@ -8,6 +8,7 @@ const Settings = ({ getCookie }) => {
     const [timezone, setTimezone] = useState('')
     const [wakeUpTime, setWakeUpTime] = useState('')
     const [bedtime, setBedtime] = useState('')
+    const [validated, setValidated] = useState('')
 
     useEffect(() => {
       const getAccountSettings = async () => {
@@ -40,6 +41,11 @@ const Settings = ({ getCookie }) => {
 
       const data = await res.json()
 
+      setValidated(true)
+      setTimeout(() => {
+        setValidated(false)
+      }, 2200)
+
     }
 
     const fetchAccountSettings = async () => {
@@ -51,8 +57,8 @@ const Settings = ({ getCookie }) => {
 
     return (
       <div className="settings">
-        <Form onSubmit={onSubmit}>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form validated={validated} onSubmit={onSubmit}>
+          {/* <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Timezone</Form.Label>
               <Form.Select aria-label="Default select example" value={timezone} onChange={(e) => setTimezone(e.target.value)}>
                 <option value="America/Chicago">America/Chicago</option>
@@ -60,7 +66,7 @@ const Settings = ({ getCookie }) => {
                 <option value="America/Denver">America/Denver</option>
                 <option value="America/Los_Angeles">America/Los Angeles</option>
               </Form.Select>
-          </Form.Group>
+          </Form.Group> */}
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>Wake Up Time</Form.Label>
               <Form.Control

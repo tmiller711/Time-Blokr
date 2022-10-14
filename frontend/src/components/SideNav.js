@@ -36,7 +36,15 @@ const SideNav = (props) => {
         let hour = today.getHours()
         let minutes = today.getMinutes()
 
-        setTime(hour + ":" + minutes + (hour >= 12 ? "PM":"AM"))
+        if (minutes < 10) {
+            minutes = `0${minutes}`
+        }
+
+        let pmAM = ""
+        hour >= 12 ? pmAM="PM" : pmAM="AM"
+        hour > 12 ? hour=hour-12 : null
+
+        setTime(hour + ":" + minutes + pmAM)
 
         setTimeout(() => {
             getTime()
@@ -48,7 +56,7 @@ const SideNav = (props) => {
         <div className="sidenav">
             <div className="logo_content">
                 <div className="logo">
-                    <i class='bx bxl-c-plus-plus'></i>
+                    <i class='bx bx-time' ></i>
                     <div className="logo_name">TimeBlokr</div>
                 </div>
                 <i class='bx bx-menu' id="btn" onClick={changeSideNavClass}></i>
@@ -64,7 +72,7 @@ const SideNav = (props) => {
                 </li>
                 <li>
                     <Link to="/">
-                        <i class="bx bx-grid-alt"></i>
+                        <i class='bx bx-home-alt-2' ></i>
                         <span class="links_name">Dashboard</span>
                     </Link>
                     <span class="tooltip">Dashboard</span>
@@ -78,7 +86,7 @@ const SideNav = (props) => {
                 </li>
                 <li>
                     <Link to="/settings">
-                        <i class="bx bx-chat"></i>
+                        <i class='bx bx-cog bx-flip-vertical' ></i>
                         <span class="links_name">Settings</span>
                     </Link>
                     <span class="tooltip">Settings</span>

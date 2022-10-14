@@ -19,6 +19,16 @@ class GetBlocks(APIView):
         blocks = Block.objects.filter(user=request.user)
         data = BlocksSerializer(blocks, many=True).data
 
+        # data[0]['start_time'] = "17:38:00"
+        for block in data:
+            start_time = datetime.strptime(block['start_time'], "%H:%M:%S")
+            start_time = start_time.strftime("%-I:%M%p")
+            block['start_time'] = start_time
+
+            end_time = datetime.strptime(block['end_time'], "%H:%M:%S")
+            end_time = end_time.strftime("%-I:%M%p")
+            block['end_time'] = end_time
+
         return Response(data, status=status.HTTP_200_OK)
 
 class UpdateBlocks(APIView):
@@ -76,14 +86,15 @@ class CreateBlock(APIView):
 
             new_block_data = BlocksSerializer(new_block).data
 
+            # format start time and endtime
+            start_time = datetime.strptime(new_block_data['start_time'], "%H:%M:%S")
+            start_time = start_time.strftime("%-I:%M%p")
+            new_block_data['start_time'] = start_time
+
+            end_time = datetime.strptime(new_block_data['end_time'], "%H:%M:%S")
+            end_time = end_time.strftime("%-I:%M%p")
+            new_block_data['end_time'] = end_time
+
             return Response(new_block_data, status=status.HTTP_201_CREATED)
 
         return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
-
-class GetTime(APIView):
-
-    def get(self, request, format=None):
-        cur_time = pytz.timezone(request.user.timezone)
-        standard_time = datetime.now(cur_time).strftime("%-I:%M%p")
-
-        return Response({"time": standard_time}, status=status.HTTP_200_OK)

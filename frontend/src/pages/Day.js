@@ -9,8 +9,8 @@ const Day = ({ getCookie }) => {
     useEffect(() => {
         const getTimes = async () => {
             const accountTimes = await fetchTimes()
-            setWakeUpTime(accountTimes.wake_up_time)
-            setBedtime(accountTimes.bedtime)
+            setWakeUpTime(accountTimes.wake_up_time_display)
+            setBedtime(accountTimes.bedtime_display)
         }
 
         getTimes()

@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
+from datetime import timedelta, datetime
 
 from .models import Account
 from .serializers import (RegisterAccountSerializer, LoginAccountSerializer, AccountSettingsSerializer,
@@ -63,6 +64,15 @@ class AccountSettings(APIView):
     def get(self, request, format=None):
         account = request.user
         data = AccountSettingsSerializer(account).data
+
+        # create a time to display on day page in correct format
+        wake_up_time = datetime.strptime(data['wake_up_time'], "%H:%M:%S")
+        wake_up_time = wake_up_time.strftime("%-I:%M%p")
+        data['wake_up_time_display'] = wake_up_time
+
+        bedtime = datetime.strptime(data['bedtime'], "%H:%M:%S")
+        bedtime = bedtime.strftime("%-I:%M%p")
+        data['bedtime_display'] = bedtime
 
         return Response(data, status=status.HTTP_200_OK)
 

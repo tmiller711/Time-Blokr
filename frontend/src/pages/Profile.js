@@ -7,6 +7,7 @@ import "../css/profile.css"
 const Profile = ({ getCookie }) => {
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
+    const [validated, setValidated] = useState('')
 
     useEffect(() => {
         const getAccountProfile = async () => {
@@ -44,17 +45,28 @@ const Profile = ({ getCookie }) => {
 
         const data = await res.json()
 
+        setValidated(true)
+        setTimeout(() => {
+            setValidated(false)
+        }, 2200)
+
+    }
+
+    const test = () => {
+        console.log("blue")
     }
 
     return (
         <div className="profile-form">
-            <Form onSubmit={onSubmit}>
+            <Form validated={validated} onSubmit={onSubmit}>
                 <Form.Group className="mb-3" controlId="validationCustom01">
                     <Form.Label>Name</Form.Label>
                     <Form.Control
                         type="text"
+                        onBlur={() => test()}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        // onBlur={console.log("blur")}
                     />
                     <Form.Control.Feedback type="invalid">
                     Please input a valid topic name
@@ -67,9 +79,6 @@ const Profile = ({ getCookie }) => {
                         value={phoneNumber}
                         onChange={(e) => setPhoneNumber(e.target.value)}
                     />
-                    <Form.Control.Feedback type="invalid">
-                    Please input a valid topic name
-                    </Form.Control.Feedback>
                 </Form.Group>
 
                 <Button type="submit" className="btn btn-block">Save</Button>
