@@ -12,6 +12,8 @@ const Block = ({ block, onTopicChange, onDelete, onUpdate }) => {
 
     const handleOnBlur = (e) => {
         // if it looses focus update the blocks
+
+        // this should only be called if we changed something
         onUpdate(e)
     }
 
@@ -22,7 +24,6 @@ const Block = ({ block, onTopicChange, onDelete, onUpdate }) => {
                     className="block"
                     type="text"
                     placeholder=""
-                    autoFocus
                     required
                     value={block.topic}
                     onBlur={handleOnBlur}

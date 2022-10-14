@@ -96,7 +96,6 @@ const SideNav = (props) => {
                 <div className="profile">
                     <div className="profile_details">
                         {/* figure out how to get static files */}
-                        <img src="static/images/test.png"></img>
                         <div className="name_job">
                             <div className="name">{name}</div>
                             <div className="job">{username}</div>
