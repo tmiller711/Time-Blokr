@@ -67,7 +67,8 @@
     position: relative;
     height: 50px;
     width: 100%;
-    margin: 50px 0px;
+    /* margin: 50px 0px; */
+    margin-bottom: 50px;
     transform: translateX(-18px);
     list-style: none;
     line-height: 50px;
@@ -233,4 +234,19 @@
 .sidenav.active ~ .content {
     width: calc(100% - 240px);
     left: 240px;
+}
+
+.sidenav .time {
+    color: #E4E5EA;
+    display: flex;
+    margin-top: 10px;
+    transform: translateX(20%);
+    height: 50px;
+    width: 100%;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.sidenav.active .time {
+    opacity: 1;
 }

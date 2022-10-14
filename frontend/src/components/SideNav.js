@@ -17,16 +17,8 @@ const SideNav = (props) => {
             setName(data.name)
         }
 
-        // const getTime = async () => {
-        //     const res = await fetch('/api/gettime')
-        //     const data = await res.json()
-    
-        //     setTime(data.time)
-        // }
-
         getTime()
         getAccountSettings()
-        // getTime()
     }, [])
 
     const changeSideNavClass = () => {
@@ -40,11 +32,11 @@ const SideNav = (props) => {
     }
 
     const getTime = async () => {
-        console.log("getting time")
-        const res = await fetch('/api/gettime')
-        const data = await res.json()
+        var today = new Date();
+        let hour = today.getHours()
+        let minutes = today.getMinutes()
 
-        setTime(data.time)
+        setTime(hour + ":" + minutes + (hour >= 12 ? "PM":"AM"))
 
         setTimeout(() => {
             getTime()
