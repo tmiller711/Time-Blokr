@@ -48,12 +48,9 @@ const Profile = ({ getCookie }) => {
         setValidated(true)
         setTimeout(() => {
             setValidated(false)
+            console.log('adfas')
         }, 2200)
 
-    }
-
-    const test = () => {
-        console.log("blue")
     }
 
     return (

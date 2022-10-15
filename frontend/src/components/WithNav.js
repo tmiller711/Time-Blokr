@@ -2,10 +2,10 @@ import React from 'react';
 import SideNav from './SideNav';
 import { Outlet } from 'react-router';
 
-export default () => {
+export default ({ getCurTime }) => {
   return (
     <>
-      <SideNav />
+      <SideNav getCurTime={getCurTime} />
       <div className="content">
         <Outlet />
       </div>

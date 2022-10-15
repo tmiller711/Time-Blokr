@@ -7,21 +7,49 @@ import "../css/blocks.css"
 import Form from 'react-bootstrap/Form';
 import AddBlockModal from "./AddBlockModal";
 
-const Blocks = ({ getCookie }) => {
+const Blocks = ({ getCookie, getCurTime, curBlock }) => {
     const [blocks, setBlocks] = useState([])
     const [show, setShow] = useState(false);
 
     useEffect(() => {
+        console.log("test")
         const getBlocks = async () => {
             const blocksFromServer = await fetchBlocks()
             setBlocks(blocksFromServer)
         };
 
         getBlocks()
-    }, []);
+        // checkTimes(blocks)
+    });
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const checkTimes = (blocks) => {
+        // converts time into strings that are easily comparable
+        console.log(blocks)
+        console.log("ldajf")
+        const convert_time = (time) => {
+            let times = time.split(":")
+            let hour = times[0]
+            let minutes = times[1].substr(0, 2)
+            let amPM = times[1].substr(2)
+            
+            amPM == 'PM' && hour != 12 ? hour = +hour+12 : null
+            return (hour + minutes)
+        }
+        let curTime = getCurTime()
+        curTime = convert_time(curTime)
+
+        for (let i = 0; i < blocks.length; i++) {
+            let startTime = convert_time(blocks[i].start_time)
+            let endTime = convert_time(blocks[i].end_time)
+            if (startTime < curTime && endTime > curTime) {
+                let percentDone = (curTime-startTime)/(endTime - startTime)
+                curBlock(blocks[i], percentDone)
+            }
+        }
+    }
 
     // function that calls two functions
     const onSave = (topic, startTime, length) => {
@@ -103,7 +131,7 @@ const Blocks = ({ getCookie }) => {
     return (
         <Form>
             <div className="blocks">
-                    
+                {/* {blocks.length > 0 ? checkTimes(blocks) : null} */}
                 {blocks.length > 0 ? blocks.map((block) => (
                     <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} onUpdate={updateBlocks} />
                 )) : <h2 style={{color: 'blue'}}>No Blocks to Display</h2>}

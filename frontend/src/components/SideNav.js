@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import {Routes, Route, useNavigate, Link} from 'react-router-dom';
 import '../css/sidenav.css';
 
-const SideNav = (props) => {
+const SideNav = ({ getCurTime }) => {
     const navigate = useNavigate();
     const [time, setTime] = useState('');
     const [username, setUsername] = useState('');
@@ -32,23 +32,11 @@ const SideNav = (props) => {
     }
 
     const getTime = async () => {
-        var today = new Date();
-        let hour = today.getHours()
-        let minutes = today.getMinutes()
-
-        if (minutes < 10) {
-            minutes = `0${minutes}`
-        }
-
-        let pmAM = ""
-        hour >= 12 ? pmAM="PM" : pmAM="AM"
-        hour > 12 ? hour=hour-12 : null
-
-        setTime(hour + ":" + minutes + pmAM)
+        setTime(getCurTime())
 
         setTimeout(() => {
             getTime()
-        }, 30000)
+        }, 20000)
     }
 
     return (

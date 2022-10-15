@@ -28,6 +28,22 @@ function App() {
         return cookieValue;
         }
 
+    const getCurTime = () => {
+        var today = new Date();
+        let hour = today.getHours()
+        let minutes = today.getMinutes()
+
+        if (minutes < 10) {
+            minutes = `0${minutes}`
+        }
+
+        let pmAM = ""
+        hour >= 12 ? pmAM="PM" : pmAM="AM"
+        hour > 12 ? hour=hour-12 : null
+
+        return (hour + ":" + minutes + pmAM)
+    }
+
     return (
         <>
             <Routes>
@@ -35,8 +51,8 @@ function App() {
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                 </Route>
-                <Route element={<WithNav />}>
-                    <Route path="/" element={<Day getCookie={getCookie} />} />
+                <Route element={<WithNav getCurTime={getCurTime}/>}>
+                    <Route path="/" element={<Day getCookie={getCookie} getCurTime={getCurTime} />} />
                     <Route path="/profile" element={<Profile getCookie={getCookie} />} />
                     <Route path="/settings" element={<Settings getCookie={getCookie} />} />
                 </Route>

@@ -1,0 +1,19 @@
+.day-view {
+    display: flex;
+    text-align: center;
+}
+
+.current-task {
+    flex: 1;
+}
+
+.time-blocking {
+    margin-left: 25px;
+}
+
+.seperator {
+    margin-top: 0px;
+    border-left: 3px dashed black;
+    height: 98vh;
+    margin-left: 60px;
+}
