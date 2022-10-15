@@ -6,6 +6,11 @@
 .current-task {
     flex: 1;
 }
+.progress {
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+}
 
 .time-blocking {
     margin-left: 25px;

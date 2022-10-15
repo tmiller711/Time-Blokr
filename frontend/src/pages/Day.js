@@ -1,12 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Blocks from "../components/Blocks"
+import ProgressBar from 'react-bootstrap/ProgressBar';
 import "../css/day.css"
 
 const Day = ({ getCookie, getCurTime }) => {
     const [wakeUpTime, setWakeUpTime] = useState('')
     const [bedtime, setBedtime] = useState('')
     const [currentBlock, setCurBlock] = useState('')
+    const [percentDone, setPercentDone] = useState()
 
     useEffect(() => {
         const getTimes = async () => {
@@ -25,9 +27,22 @@ const Day = ({ getCookie, getCurTime }) => {
         return data
     }
 
-    const curBlock = (block, percentDone) => {
-        console.log(percentDone)
+    const curBlock = (block, _percentDone) => {
         setCurBlock(block)
+        setPercentDone(_percentDone)
+    }
+
+    const renderCurTask = () => {
+        if (curBlock == '') {
+            return <h1>This is a test</h1>
+        }
+        return (
+            <>
+            <h1>Current Task: {currentBlock.topic}</h1>
+            <h3>{currentBlock.start_time} - {currentBlock.end_time} </h3>
+            <ProgressBar className="progress" now={percentDone} />
+            </>
+        )
     }
 
     return (
@@ -48,7 +63,10 @@ const Day = ({ getCookie, getCurTime }) => {
             <hr className="seperator"></hr>
 
             <div className="current-task">
-                <h1>Current Task: {currentBlock.topic}</h1>
+                {renderCurTask()}
+                {/* <h1>Current Task: {currentBlock.topic}</h1>
+                <h3>{currentBlock.start_time} - {currentBlock.end_time} </h3>
+                <ProgressBar className="progress" now={percentDone} /> */}
             </div>
         </div>
     )
