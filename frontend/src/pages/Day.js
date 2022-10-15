@@ -33,8 +33,8 @@ const Day = ({ getCookie, getCurTime }) => {
     }
 
     const renderCurTask = () => {
-        if (curBlock == '') {
-            return <h1>This is a test</h1>
+        if (currentBlock == '') {
+            return <h1>No Current Task</h1>
         }
         return (
             <>
@@ -64,9 +64,6 @@ const Day = ({ getCookie, getCurTime }) => {
 
             <div className="current-task">
                 {renderCurTask()}
-                {/* <h1>Current Task: {currentBlock.topic}</h1>
-                <h3>{currentBlock.start_time} - {currentBlock.end_time} </h3>
-                <ProgressBar className="progress" now={percentDone} /> */}
             </div>
         </div>
     )

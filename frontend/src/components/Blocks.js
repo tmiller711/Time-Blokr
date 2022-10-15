@@ -43,9 +43,11 @@ const Blocks = ({ getCookie, getCurTime, curBlock }) => {
             let startTime = convert_time(blocks[i].start_time)
             let endTime = convert_time(blocks[i].end_time)
 
-            if (startTime < curTime && endTime > curTime) {
+            if (startTime <= curTime && endTime >= curTime) {
                 let percentDone = ((curTime-startTime)/(endTime - startTime))*100
                 curBlock(blocks[i], percentDone)
+            } else {
+                curBlock('')
             }
         }
 
@@ -144,7 +146,6 @@ const Blocks = ({ getCookie, getCurTime, curBlock }) => {
             </div>
 
             {show === true ? <AddBlockModal show={show} handleClose={handleClose} handleSave={onSave} /> : null}
-
         </Form>
     )
 }

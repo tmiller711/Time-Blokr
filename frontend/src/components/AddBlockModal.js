@@ -3,12 +3,31 @@ import { useState } from "react";
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import Slider from '@mui/material/Slider';
 
 const AddBlockModal = ({ show, handleClose, handleSave }) => {
     const [topic, setTopic] = useState('')
     const [startTime, setStartTime] = useState('')
-    const [length, setLength] = useState('1')
+    const [length, setLength] = useState('')
     const [validated, setValidated] = useState(false)
+    const marks = [
+        {
+            value: 1,
+            label: "1 Hr"
+        },
+        {
+            value: 2,
+            label: "2 Hrs"
+        },
+        {
+            value: 3,
+            label: "3 Hrs"
+        },
+        {
+            value: 4,
+            label: "4 Hrs"
+        }
+    ]
 
     const onSubmit = (event) => {
         const form = event.currentTarget;
@@ -22,6 +41,7 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
     }
 
     const handleSubmit = () => {
+        console.log(length)
         if (topic.length > 0 && startTime.length > 0) {
             handleSave(topic, startTime, length)
         }
@@ -61,14 +81,17 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
                         Please select a valid time
                         </Form.Control.Feedback>
                         </Form.Group>
-                        <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                            <Form.Label>Length</Form.Label>
-                            <Form.Select aria-label="Default select example" onChange={(e) => setLength(e.target.value)}>
-                            <option value="1">1 Hr</option>
-                            <option value="2">2 Hrs</option>
-                            <option value="3">3 Hrs</option>
-                            </Form.Select>
-                        </Form.Group>
+                        <Form.Label>Length</Form.Label>
+                        <Slider
+                            aria-label="Length"
+                            defaultValue={1}
+                            valueLabelDisplay={marks}
+                            step={0.5}
+                            min={1}
+                            max={4}
+                            marks={marks}
+                            onChange={(e) => setLength(e.target.value)}
+                        />
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

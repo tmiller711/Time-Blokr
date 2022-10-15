@@ -1,3 +1,4 @@
+from shutil import ExecError
 from django.shortcuts import render
 from django.http import JsonResponse
 from rest_framework import generics, status
@@ -65,7 +66,10 @@ class CreateBlock(APIView):
 
     def post(self, request, format=None):
         try:
-            end_time = (datetime.strptime(request.data['start_time'], "%H:%M") + timedelta(hours=int(request.data['length']))).time()
+            if type(request.data['length']) == float:
+                end_time = (datetime.strptime(request.data['start_time'], "%H:%M") + timedelta(hours=int(request.data['length']), minutes=30)).time()
+            else:
+                end_time = (datetime.strptime(request.data['start_time'], "%H:%M") + timedelta(hours=int(request.data['length']))).time()
         except:
             return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
             
