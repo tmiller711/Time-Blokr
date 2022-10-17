@@ -41,7 +41,6 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
     }
 
     const handleSubmit = () => {
-        console.log(length)
         if (topic.length > 0 && startTime.length > 0) {
             handleSave(topic, startTime, length)
         }
@@ -72,7 +71,6 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
                         <Form.Label>Start Time</Form.Label>
                         <Form.Control
                             type="time"
-                            placeholder=""
                             autoFocus
                             required
                             onChange={(e) => setStartTime(e.target.value)}

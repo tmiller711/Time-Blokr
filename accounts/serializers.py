@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Account
+from .models import Account, Pomodoro
 from django.contrib.auth import get_user_model
 
 
@@ -23,3 +23,8 @@ class AccountProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = ('name', 'phone')
+
+class PomodoroSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pomodoro
+        fields = ('work_length', 'break_length')

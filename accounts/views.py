@@ -11,7 +11,7 @@ from datetime import timedelta, datetime
 
 from .models import Account, Pomodoro
 from .serializers import (RegisterAccountSerializer, LoginAccountSerializer, AccountSettingsSerializer,
-                        AccountProfileSerializer)
+                        AccountProfileSerializer, PomodoroSerializer)
 
 # Create your views here.
 
@@ -122,3 +122,18 @@ class PomodoroSettings(APIView):
 
         data = {'work_length': settings[0].work_length, 'break_length': settings[0].break_length}
         return JsonResponse(data, status=status.HTTP_200_OK)
+
+    def post(self, request, format=None):
+        serializer = PomodoroSerializer(data=request.data)
+        if serializer.is_valid():
+            work_length = serializer.data.get('work_length')
+            break_length = serializer.data.get('break_length')
+
+            settings = Pomodoro.objects.get(user=request.user)
+            settings.work_length = work_length
+            settings.break_length = break_length
+            settings.save()
+
+            return Response({"workLength": work_length, "breakLength": break_length}, status=status.HTTP_200_OK)
+
+        return Response({"Message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)

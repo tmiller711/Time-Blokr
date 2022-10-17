@@ -18,7 +18,7 @@ class GetBlocks(APIView):
     def post(self, request, format=None):
         date = request.data['date']
         if date == "":
-            return
+            return Response()
         # also filter the blocks for the correct date
         blocks = Block.objects.filter(user=request.user, date=date)
         data = BlocksSerializer(blocks, many=True).data

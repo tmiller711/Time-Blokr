@@ -48,7 +48,6 @@ const Profile = ({ getCookie }) => {
         setValidated(true)
         setTimeout(() => {
             setValidated(false)
-            console.log('adfas')
         }, 2200)
 
     }
@@ -63,7 +62,6 @@ const Profile = ({ getCookie }) => {
                         onBlur={() => test()}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        // onBlur={console.log("blur")}
                     />
                     <Form.Control.Feedback type="invalid">
                     Please input a valid topic name

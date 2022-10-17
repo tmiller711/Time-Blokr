@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import PomodoroModal from './PomodoroModal';
 
-const Pomodoro = () => {
+const Pomodoro = ({getCookie}) => {
     const [workLength, setWorkLength] = useState('')
     const [breakLength, setBreakLength] = useState('')
     const [show, setShow] = useState(false);
@@ -28,8 +28,26 @@ const Pomodoro = () => {
         return data
     }
 
-    const onSave = () => {
-        console.log('save')
+    const onSave = async (_workLength, _breakLength) => {
+        _workLength == "" ? _workLength = workLength : null
+        _breakLength == "" ? _breakLength = breakLength : null
+        const csrftoken = getCookie('csrftoken')
+
+        const res = await fetch('/api/account/pomodoro', {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify({
+                work_length: _workLength,
+                break_length: _breakLength
+            })
+        })
+
+        const data = await res.json()
+        setWorkLength(data.workLength)
+        setBreakLength(data.breakLength)
     }
 
     const calcMinsSecs = (secondsLeft) => {
@@ -53,7 +71,8 @@ const Pomodoro = () => {
 
             <Button variant="primary" name="pomodoro-settings" onClick={handleShow}>Settings</Button>
 
-            {show === true ? <PomodoroModal show={show} handleClose={handleClose} handleSave={onSave} /> : null}
+            {show === true ? <PomodoroModal show={show} handleClose={handleClose} handleSave={onSave} 
+                                _workLength={workLength} _breakLength={breakLength} /> : null}
         </>
     )
 }

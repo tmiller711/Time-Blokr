@@ -77,7 +77,7 @@ const Day = ({ getCookie, getCurTime }) => {
             <div className="task">
                 {renderCurTask()}
                 <div className="pomodoro">
-                    <Pomodoro />
+                    <Pomodoro getCookie={getCookie}/>
                 </div>
             </div>
 
