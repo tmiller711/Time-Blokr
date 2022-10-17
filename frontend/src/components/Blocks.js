@@ -7,24 +7,29 @@ import "../css/blocks.css"
 import Form from 'react-bootstrap/Form';
 import AddBlockModal from "./AddBlockModal";
 
-const Blocks = ({ getCookie, getCurTime, curBlock }) => {
+const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
     const [blocks, setBlocks] = useState([])
     const [show, setShow] = useState(false);
 
     useEffect(() => {
         const getBlocks = async () => {
-            const blocksFromServer = await fetchBlocks()
+            const blocksFromServer = await fetchBlocks(date)
             setBlocks(blocksFromServer)
         };
 
         getBlocks()
         // checkTimes()
-    }, []);
+    }, [date]);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     const checkTimes = (blocks) => {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        let _today = (`${yyyy}-${mm}-${dd}`)
         // converts time into strings that are easily comparable
         const convert_time = (time) => {
             let times = time.split(":")
@@ -43,7 +48,7 @@ const Blocks = ({ getCookie, getCurTime, curBlock }) => {
             let startTime = convert_time(blocks[i].start_time)
             let endTime = convert_time(blocks[i].end_time)
 
-            if (startTime <= curTime && endTime >= curTime) {
+            if (startTime <= curTime && endTime >= curTime && date==_today) {
                 let percentDone = ((curTime-startTime)/(endTime - startTime))*100
                 curBlock(blocks[i], percentDone)
             } else {
@@ -62,8 +67,18 @@ const Blocks = ({ getCookie, getCurTime, curBlock }) => {
         addBlock(topic, startTime, length)
     }
 
-    const fetchBlocks = async () => {
-        const res = await fetch("/api/getblocks")
+    const fetchBlocks = async (date) => {
+        const csrftoken = getCookie('csrftoken');
+        const res = await fetch("/api/getblocks", {
+            method: "POST",
+            headers: {
+                'Content-Type': "application/json",
+                'X-CSRFToken': csrftoken
+            },
+            body: JSON.stringify({
+                date: date
+            })
+        })
         const data = await res.json()
 
         return data
@@ -113,6 +128,10 @@ const Blocks = ({ getCookie, getCurTime, curBlock }) => {
     }
 
     const addBlock = async (topic, startTime, length) => {
+        if (blocks.length == 7) {
+            alert("Too many blocks")
+            return
+        }
         // send post request to server
         const csrftoken = getCookie('csrftoken');
         const res = await fetch('/api/createblock', {
@@ -124,7 +143,8 @@ const Blocks = ({ getCookie, getCurTime, curBlock }) => {
             body: JSON.stringify({
                 topic: topic,
                 start_time: startTime,
-                length: length
+                length: length,
+                date: date
             })
         })
 

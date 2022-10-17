@@ -8,7 +8,7 @@ import Slider from '@mui/material/Slider';
 const AddBlockModal = ({ show, handleClose, handleSave }) => {
     const [topic, setTopic] = useState('')
     const [startTime, setStartTime] = useState('')
-    const [length, setLength] = useState('')
+    const [length, setLength] = useState('1')
     const [validated, setValidated] = useState(false)
     const marks = [
         {
@@ -99,7 +99,7 @@ const AddBlockModal = ({ show, handleClose, handleSave }) => {
                     Close
                 </Button>
                 <Button variant="primary" onClick={onSubmit}>
-                    Save Changes
+                    Add Block
                 </Button>
                 </Modal.Footer>
             </Modal>

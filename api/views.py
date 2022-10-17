@@ -15,9 +15,12 @@ from .models import Block
 class GetBlocks(APIView):
     serializer_class = BlocksSerializer
     
-    def get(self, request, format=None):
+    def post(self, request, format=None):
+        date = request.data['date']
+        if date == "":
+            return
         # also filter the blocks for the correct date
-        blocks = Block.objects.filter(user=request.user)
+        blocks = Block.objects.filter(user=request.user, date=date)
         data = BlocksSerializer(blocks, many=True).data
 
         # data[0]['start_time'] = "17:38:00"
@@ -52,7 +55,6 @@ class DeleteBlock(APIView):
     def delete(self, request, *args, **kwargs):
         id = self.kwargs['id']
         block = Block.objects.get(id=id)
-        print(block)
         if not block:
             # if we couldn't find a block with that id
             return Response({"Bad Request": f"No Block with ID: {id}"}, status=status.HTTP_404_NOT_FOUND)
@@ -81,9 +83,9 @@ class CreateBlock(APIView):
             topic = serializer.data.get('topic')
             start_time = serializer.data.get('start_time')
             end_time = serializer.data.get("end_time")
+            date = serializer.data.get("date")
 
             # change date to take in an argument from the backend in the body through the JSON data it passes
-            date = datetime.today()
 
             new_block = Block(user=request.user, topic=topic, start_time=start_time, end_time=end_time, date=date)
             new_block.save()

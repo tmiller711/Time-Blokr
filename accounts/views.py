@@ -9,7 +9,7 @@ from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 from datetime import timedelta, datetime
 
-from .models import Account
+from .models import Account, Pomodoro
 from .serializers import (RegisterAccountSerializer, LoginAccountSerializer, AccountSettingsSerializer,
                         AccountProfileSerializer)
 
@@ -113,4 +113,12 @@ class GetUser(APIView):
 
     def get(self, request, format=None):
         data = {"username": request.user.username, "name": request.user.name}
+        return JsonResponse(data, status=status.HTTP_200_OK)
+
+# create a view for getting the users pomodoro model and if it doesn't exist yet then create it
+class PomodoroSettings(APIView):
+    def get(self, request, format=None):
+        settings = Pomodoro.objects.get_or_create(user=request.user)
+
+        data = {'work_length': settings[0].work_length, 'break_length': settings[0].break_length}
         return JsonResponse(data, status=status.HTTP_200_OK)

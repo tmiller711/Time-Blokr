@@ -66,3 +66,11 @@ class Account(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+class Pomodoro(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    work_length = models.IntegerField(default=25)
+    break_length = models.IntegerField(default=5)
+
+    def __str__(self):
+        return self.user.username

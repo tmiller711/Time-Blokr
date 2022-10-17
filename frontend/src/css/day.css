@@ -3,7 +3,7 @@
     text-align: center;
 }
 
-.current-task {
+.task {
     flex: 1;
 }
 .progress {
@@ -21,4 +21,12 @@
     border-left: 3px dashed black;
     height: 98vh;
     margin-left: 60px;
+}
+
+.pomodoro {
+    margin-top: 550px;
+}
+
+.time-left {
+    font-size: 100px;
 }

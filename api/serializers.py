@@ -5,9 +5,9 @@ from django.contrib.auth import get_user_model
 class BlocksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Block
-        fields = ('id', 'topic', 'start_time', 'end_time')
+        fields = ('id', 'topic', 'start_time', 'end_time', 'date')
 
 class CreateBlocksSerializer(serializers.ModelSerializer):
     class Meta:
         model = Block
-        fields = ('topic', 'start_time', 'end_time')
+        fields = ('topic', 'start_time', 'end_time', 'date')
