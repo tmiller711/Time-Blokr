@@ -24,9 +24,14 @@
 }
 
 .pomodoro {
-    margin-top: 550px;
+    margin-top: 450px;
+}
+
+.work-state {
+    margin: 0;
 }
 
 .time-left {
     font-size: 100px;
+    margin: 0;
 }
