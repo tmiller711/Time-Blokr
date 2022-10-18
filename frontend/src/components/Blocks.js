@@ -127,10 +127,33 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
         setBlocks(blocks.filter((block) => block.id !== id))
     }
 
+    const timeToMinutes = (time) => {
+        time = time.split(':')
+        let hours = time[0]
+        let minutes = time[1].slice(0, 2)
+        let amPM = time[1].slice(-2)
+        if (amPM == "PM" && hours < 12) {
+            hours = hours+12
+        }
+        if (hours < 10) {
+            hours = hours.replace("0", "")
+        }
+        // (amPM == "PM" && hours < 12) ? hours = hours+12 : null
+        return (hours+minutes)
+    }
+
     const addBlock = async (topic, startTime, length) => {
         if (blocks.length == 7) {
             alert("Too many blocks")
             return
+        }
+
+        for (let i = 0; i < blocks.length; i++) {
+            console.log(timeToMinutes(blocks[i].start_time) < timeToMinutes(startTime))
+            if (timeToMinutes(blocks[i].start_time) <= timeToMinutes(startTime) && timeToMinutes(blocks[i].end_time) >= timeToMinutes(startTime)) {
+                alert("Selected time is already filled")
+                return
+            }
         }
         // send post request to server
         const csrftoken = getCookie('csrftoken');
