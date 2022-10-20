@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Blocks from "../components/Blocks"
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import Pomodoro from "../components/Pomodoro"
-import "../css/day.css"
+// import "../css/day.css"
 import Form from "react-bootstrap/Form";
 
 const Day = ({ getCookie, getCurTime }) => {

@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import Block from './Block'
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import "../css/blocks.css"
+// import "../css/blocks.css"
 import Form from 'react-bootstrap/Form';
 import AddBlockModal from "./AddBlockModal";
 
@@ -24,6 +24,17 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    const converTime = (time) => {
+        let times = time.split(":")
+        let hour = times[0]
+        let minutes = times[1].substr(0, 2)
+        let amPM = times[1].substr(2)
+        
+        amPM == 'PM' && hour != 12 ? hour = +hour+12 : null
+        amPM == 'AM' && hour == 12 ? hour = +hour-12 : null
+        return (hour + minutes)
+    }
+
     const checkTimes = (blocks) => {
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
@@ -31,22 +42,13 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
         var yyyy = today.getFullYear();
         let _today = (`${yyyy}-${mm}-${dd}`)
         // converts time into strings that are easily comparable
-        const convert_time = (time) => {
-            let times = time.split(":")
-            let hour = times[0]
-            let minutes = times[1].substr(0, 2)
-            let amPM = times[1].substr(2)
-            
-            amPM == 'PM' && hour != 12 ? hour = +hour+12 : null
-            amPM == 'AM' && hour == 12 ? hour = +hour-12 : null
-            return (hour + minutes)
-        }
+
         let curTime = getCurTime()
-        curTime = convert_time(curTime)
+        curTime = converTime(curTime)
 
         for (let i = 0; i < blocks.length; i++) {
-            let startTime = convert_time(blocks[i].start_time)
-            let endTime = convert_time(blocks[i].end_time)
+            let startTime = converTime(blocks[i].start_time)
+            let endTime = converTime(blocks[i].end_time)
 
             if (startTime <= curTime && endTime >= curTime && date==_today) {
                 let percentDone = ((curTime-startTime)/(endTime - startTime))*100

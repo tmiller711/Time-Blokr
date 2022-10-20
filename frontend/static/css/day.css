@@ -1,0 +1,37 @@
+.day-view {
+    display: flex;
+    text-align: center;
+}
+
+.task {
+    flex: 1;
+}
+.progress {
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+}
+
+.time-blocking {
+    margin-left: 25px;
+}
+
+.seperator {
+    margin-top: 0px;
+    border-left: 3px dashed black;
+    height: 98vh;
+    margin-left: 60px;
+}
+
+.pomodoro {
+    margin-top: 450px;
+}
+
+.work-state {
+    margin: 0;
+}
+
+.time-left {
+    font-size: 100px;
+    margin: 0;
+}
