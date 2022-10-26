@@ -20,10 +20,9 @@ class GetBlocks(APIView):
         if date == "":
             return Response()
         # also filter the blocks for the correct date
-        blocks = Block.objects.filter(user=request.user, date=date)
+        blocks = Block.objects.filter(user=request.user, date=date).order_by('start_time')
         data = BlocksSerializer(blocks, many=True).data
 
-        # data[0]['start_time'] = "17:38:00"
         for block in data:
             start_time = datetime.strptime(block['start_time'], "%H:%M:%S")
             start_time = start_time.strftime("%-I:%M%p")
@@ -100,7 +99,6 @@ class CreateBlock(APIView):
             end_time = datetime.strptime(new_block_data['end_time'], "%H:%M:%S")
             end_time = end_time.strftime("%-I:%M%p")
             new_block_data['end_time'] = end_time
-
             return Response(new_block_data, status=status.HTTP_201_CREATED)
 
         return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)

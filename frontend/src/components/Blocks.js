@@ -173,10 +173,14 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
                 date: date
             })
         })
+        
+        // retrieve all the new blocks in order
+        const getBlocks = async () => {
+            const blocksFromServer = await fetchBlocks(date)
+            setBlocks(blocksFromServer)
+        };
 
-        const data = await res.json()
-
-        setBlocks([...blocks, data])
+        getBlocks()
     }
 
     return (
