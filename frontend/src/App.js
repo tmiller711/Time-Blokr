@@ -40,7 +40,8 @@ function App() {
         let pmAM = ""
         hour >= 12 ? pmAM="PM" : pmAM="AM"
         hour > 12 ? hour=hour-12 : null
-
+        hour == 0 ? hour = 12:null
+        
         return (hour + ":" + minutes + pmAM)
     }
 

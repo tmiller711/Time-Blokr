@@ -53,6 +53,7 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
             if (startTime <= curTime && endTime >= curTime && date==_today) {
                 let percentDone = ((curTime-startTime)/(endTime - startTime))*100
                 curBlock(blocks[i], percentDone)
+                break
             } else {
                 curBlock('')
             }
@@ -60,7 +61,7 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
 
         setTimeout(() => {
             checkTimes(blocks)
-        }, 30000)
+        }, 15000)
     }
 
     // function that calls two functions
@@ -127,6 +128,7 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
 
         // set the new blocks
         setBlocks(blocks.filter((block) => block.id !== id))
+        checkTimes(blocks)
     }
 
     const timeToMinutes = (time) => {
