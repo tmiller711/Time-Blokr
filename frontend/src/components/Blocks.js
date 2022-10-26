@@ -137,7 +137,7 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
         let minutes = time[1].slice(0, 2)
         let amPM = time[1].slice(-2)
         if (amPM == "PM" && hours < 12) {
-            hours = hours+12
+            hours = parseInt(hours)+12
         }
         if (hours < 10) {
             hours = hours.replace("0", "")
@@ -153,8 +153,7 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
         }
 
         for (let i = 0; i < blocks.length; i++) {
-            console.log(timeToMinutes(blocks[i].start_time) < timeToMinutes(startTime))
-            if (timeToMinutes(blocks[i].start_time) <= timeToMinutes(startTime) && timeToMinutes(blocks[i].end_time) >= timeToMinutes(startTime)) {
+            if (timeToMinutes(blocks[i].start_time) < timeToMinutes(startTime) && timeToMinutes(blocks[i].end_time) > timeToMinutes(startTime)) {
                 alert("Selected time is already filled")
                 return
             }
