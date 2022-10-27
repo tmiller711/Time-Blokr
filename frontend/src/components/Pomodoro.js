@@ -4,6 +4,7 @@ import Modal from 'react-bootstrap/Modal';
 import PomodoroModal from './PomodoroModal';
 import useSound from 'use-sound'
 import digitalAlarm from '../css/digital-alarm.mp3'
+import Click from '../css/click.mp3'
 
 const Pomodoro = ({getCookie}) => {
     const [workLength, setWorkLength] = useState('')
@@ -12,7 +13,8 @@ const Pomodoro = ({getCookie}) => {
     const [workState, setWorkState] = useState('work')
     const [timer, setTimer] = useState('')
     const [isTimer, setIsTimer] = useState(false)
-    const [playSound] = useSound(digitalAlarm)
+    const [alarm] = useSound(digitalAlarm)
+    const [click] = useSound(Click)
 
     useEffect(() => {
         const getPomodoroSettings = async () => {
@@ -66,6 +68,7 @@ const Pomodoro = ({getCookie}) => {
     }
 
     function pomodoro() {
+        click()
         if (workState == 'work' && workLength != '') {
             setIsTimer(true)
             let secondsLeft = workLength*60
@@ -85,7 +88,7 @@ const Pomodoro = ({getCookie}) => {
                 setTimer(calcMinsSecs(breakLength*60))
                 setWorkState('break')
                 setIsTimer(false)
-                playSound()
+                alarm()
                 alert("Work is Over")
                 clearInterval(loop)
             }
@@ -100,7 +103,7 @@ const Pomodoro = ({getCookie}) => {
                 setTimer(calcMinsSecs(workLength*60))
                 setWorkState('work')
                 setIsTimer(false)
-                playSound()
+                alarm()
                 alert("Break is Over")
                 clearInterval(loop)
             }
