@@ -18,7 +18,6 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
         };
 
         getBlocks()
-        // checkTimes()
     }, [date]);
 
     const handleClose = () => setShow(false);
@@ -70,7 +69,6 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
                 let totalSecs = secondsDiff(startTime, endTime)
                 let secondsLeft = secondsDiff(startTime, curTime)
                 let percentDone = (secondsLeft/totalSecs)*100
-                console.log(percentDone)
 
                 curBlock(blocks[i], percentDone)
                 break
@@ -148,7 +146,6 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
 
         // set the new blocks
         setBlocks(blocks.filter((block) => block.id !== id))
-        checkTimes(blocks)
     }
 
     const timeToMinutes = (time) => {
@@ -206,7 +203,7 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
     return (
         <Form>
             <div className="blocks">
-                {blocks.length > 0 ? checkTimes(blocks) : null}
+                {checkTimes(blocks)}
                 {blocks.length > 0 ? blocks.map((block) => (
                     <Block key={block.id} block={block} onTopicChange={handleTopicChange} onDelete={deleteBlock} onUpdate={updateBlocks} />
                 )) : <h2 style={{color: 'blue'}}>No Blocks to Display</h2>}

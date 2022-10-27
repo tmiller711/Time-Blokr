@@ -8,10 +8,19 @@ from rest_framework.response import Response
 from django.http import JsonResponse
 from django.contrib.auth import login, authenticate
 from datetime import timedelta, datetime
+from django.contrib.auth import login, get_user_model
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.core.mail import EmailMessage
+from django.contrib import messages
+from django.shortcuts import redirect
 
 from .models import Account, Pomodoro
 from .serializers import (RegisterAccountSerializer, LoginAccountSerializer, AccountSettingsSerializer,
                         AccountProfileSerializer, PomodoroSerializer)
+from .tokens import accounts_activation_token
 
 # Create your views here.
 
@@ -31,9 +40,8 @@ class RegisterAccount(APIView):
 
             account = Account(email=email, username=username)
             account.set_password(password)
-            account.is_active = True
             account.save()
-            login(request, account)
+            activate_email(request, account, email)
             return Response({"Account Created": "Good Stuff cuh"}, status=status.HTTP_201_CREATED)
 
         return Response({'Bad Request': "Invalid Data..."}, status=status.HTTP_400_BAD_REQUEST)
@@ -137,3 +145,41 @@ class PomodoroSettings(APIView):
             return Response({"workLength": work_length, "breakLength": break_length}, status=status.HTTP_200_OK)
 
         return Response({"Message": "Bad Request"}, status=status.HTTP_400_BAD_REQUEST)
+
+def activate(request, uidb64, token):
+    User = get_user_model()
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = Account.objects.get(pk=uid)
+    except:
+        user = None
+
+    if user is not None and accounts_activation_token.check_token(user, token):
+        user.is_active = True
+        user.save()
+        
+        print("email verified")
+        login(request, user)
+
+        return redirect('/')
+    else:
+        print("bad activate link")
+    return redirect('/')
+
+def activate_email(request, user, to_email):
+    mail_subject = "Activate your user accounts"
+    message = render_to_string("template_activate_account.html", {
+        'user': user.username,
+        'domain': get_current_site(request).domain,
+        'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+        'token': accounts_activation_token.make_token(user),
+        'protocol': 'https' if request.is_secure() else 'http'
+    })
+    email = EmailMessage(mail_subject, message, to=[to_email])
+    if email.send():
+        print("sent")
+        messages.success(request, f'Dear <b>{user}</b>, please go to you email <b>{to_email}</b> inbox and click on \
+                received activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder.')
+    else:
+        print("not sent")
+        messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')

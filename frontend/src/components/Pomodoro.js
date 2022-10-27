@@ -25,7 +25,7 @@ const Pomodoro = ({getCookie}) => {
         }
 
         getPomodoroSettings()
-    }, [workLength])
+    }, [workLength, isTimer])
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -78,6 +78,7 @@ const Pomodoro = ({getCookie}) => {
             let secondsLeft = breakLength*60
             startBreak(secondsLeft)
         }
+
     }
 
     const startWork = (secondsLeft) => {
@@ -109,6 +110,13 @@ const Pomodoro = ({getCookie}) => {
             }
         }, 1000)
     }
+
+    const resetPomodoro = () => {
+        click()
+        setIsTimer(false)
+        setWorkState('work')
+        setTimer(workLength)
+    }
     
 
     return (
@@ -118,7 +126,7 @@ const Pomodoro = ({getCookie}) => {
                 <p className='time-left'>{timer}</p>
             </div>
             {isTimer == false ? <Button variant="primary" name="pomodoro-start" onClick={pomodoro}>Start</Button> : 
-                            <Button variant="primary" name="pomodoro-start">Pause</Button>}
+                            <Button variant="primary" name="pomodoro-start" onClick={resetPomodoro}>Reset</Button>}
 
             <Button variant="primary" name="pomodoro-settings" onClick={handleShow}>Settings</Button>
 
