@@ -34,6 +34,22 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
         amPM == 'AM' && hour == 12 ? hour = +hour-12 : null
         return (hour + minutes)
     }
+    
+    const secondsDiff = (time1, time2) => {
+        let hours1 = time1.slice(0, -2)
+        let minutes1 = time1.slice(-2)
+
+        let hours2 = time2.slice(0, -2)
+        let minutes2 = time2.slice(-2)
+        
+        var date1 = new Date(2000, 0, 1,  hours1, minutes1); // 9:00 AM
+        var date2 = new Date(2000, 0, 1, hours2, minutes2); // 5:00 PM
+        if (date2 < date1) {
+            date2.setDate(date2.getDate() + 1);
+        }
+
+        return date2 - date1
+    }
 
     const checkTimes = (blocks) => {
         var today = new Date();
@@ -51,7 +67,11 @@ const Blocks = ({ getCookie, getCurTime, curBlock, date }) => {
             let endTime = converTime(blocks[i].end_time)
 
             if (startTime <= curTime && endTime >= curTime && date==_today) {
-                let percentDone = ((curTime-startTime)/(endTime - startTime))*100
+                let totalSecs = secondsDiff(startTime, endTime)
+                let secondsLeft = secondsDiff(startTime, curTime)
+                let percentDone = (secondsLeft/totalSecs)*100
+                console.log(percentDone)
+
                 curBlock(blocks[i], percentDone)
                 break
             } else {
