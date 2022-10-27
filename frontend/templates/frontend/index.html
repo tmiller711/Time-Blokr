@@ -15,13 +15,6 @@
     </head>
     <body>
         <div id="main">
-            {% if messages %}
-                {% for message in messages %}
-                    {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
-
-                {% endfor %}
-
-            {% endif %}
             <div id="root"></div>
         </div>
 

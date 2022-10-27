@@ -48,7 +48,8 @@ const Register = ({ }) => {
 
         fetch('/api/account/registeraccount', requestOptions).then((response) => {
             if (response.ok) {
-                navigate("/", {replace: true})
+                navigate("/login", {replace: true})
+                alert("Activation email sent. Please confirm!")
             } else {
                 alert("Failed")
             }

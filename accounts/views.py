@@ -158,11 +158,11 @@ def activate(request, uidb64, token):
         user.is_active = True
         user.save()
         
-        print("email verified")
         login(request, user)
 
         return redirect('/')
     else:
+        # alert the user of bad activation link
         print("bad activate link")
     return redirect('/')
 
@@ -177,9 +177,6 @@ def activate_email(request, user, to_email):
     })
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
-        print("sent")
-        messages.success(request, f'Dear <b>{user}</b>, please go to you email <b>{to_email}</b> inbox and click on \
-                received activation link to confirm and complete the registration. <b>Note:</b> Check your spam folder.')
+        pass
     else:
-        print("not sent")
-        messages.error(request, f'Problem sending email to {to_email}, check if you typed it correctly.')
+        return Response({'Bad Request': "Invalid Data..."}, status=status.HTTP_400_BAD_REQUEST)
