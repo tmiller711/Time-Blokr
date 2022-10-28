@@ -29,8 +29,8 @@
     "@mui/material": "^5.10.8",
     "bootstrap": "^5.2.2",
     "file-loader": "^6.2.0",
+    "react-big-calendar": "^1.5.0",
     "react-bootstrap": "^2.5.0",
-    "react-calendar": "^3.9.0",
     "react-icons": "^4.4.0",
     "react-router-dom": "^6.4.2",
     "use-sound": "^4.0.1"

@@ -60,7 +60,7 @@ const Day = ({ getCookie, getCurTime }) => {
         <div className="day-view">
             <div className="time-blocking">
                 <div className="wake-up-time">
-                <Form.Control type="date" name='date_of_birth' value={date} onChange={(e) => setDate(e.target.value)}/>
+                <Form.Control type="date" name='block-date' value={date} onChange={(e) => setDate(e.target.value)}/>
                     <h2>Wake up: {wakeUpTime}</h2>
                 </div>
                 <div className="blocks">
