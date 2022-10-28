@@ -9,6 +9,7 @@ import WithoutNav from "./components/WithoutNav"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Day from "./pages/Day"
+import Calendar from "./pages/Calendar"
 
 function App() {
 
@@ -54,6 +55,7 @@ function App() {
                 </Route>
                 <Route element={<WithNav getCurTime={getCurTime}/>}>
                     <Route path="/" element={<Day getCookie={getCookie} getCurTime={getCurTime} />} />
+                    <Route path="/calendar" element={<Calendar />} />
                     <Route path="/profile" element={<Profile getCookie={getCookie} />} />
                     <Route path="/settings" element={<Settings getCookie={getCookie} />} />
                 </Route>

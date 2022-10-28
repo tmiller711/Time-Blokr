@@ -10,6 +10,7 @@ import "../static/css/profile.css"
 import "../static/css/registration.css"
 import '../static/css/sidenav.css';
 import "../static/css/blocks.css"
+import "../static/css/calendar.css"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

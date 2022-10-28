@@ -60,10 +60,17 @@ const SideNav = ({ getCurTime }) => {
                 </li>
                 <li>
                     <Link to="/">
-                        <i class='bx bx-home-alt-2' ></i>
-                        <span class="links_name">Dashboard</span>
+                        <i class='bx bx-menu-alt-left'></i>
+                        <span class="links_name">Blocks</span>
                     </Link>
-                    <span class="tooltip">Dashboard</span>
+                    <span class="tooltip">Blocks</span>
+                </li>
+                <li>
+                    <Link to="/calendar">
+                        <i class='bx bx-calendar'></i>
+                        <span class="links_name">Calendar</span>
+                    </Link>
+                    <span class="tooltip">Calendar</span>
                 </li>
                 <li>
                     <Link to="/profile">
@@ -86,7 +93,7 @@ const SideNav = ({ getCurTime }) => {
                         {/* figure out how to get static files */}
                         <div className="name_job">
                             <div className="name">{name}</div>
-                            <div className="job">{username}</div>
+                            <div className="username">{username}</div>
                         </div>
                     </div>
                     <a href="/logout">

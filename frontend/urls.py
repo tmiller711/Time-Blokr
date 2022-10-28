@@ -3,6 +3,7 @@ from .views import index, logout_account
 
 urlpatterns = [
     path('', index),
+    path('calendar/', index),
     path('profile/', index),
     path('settings/', index),
     path('register/', index),
