@@ -53,11 +53,11 @@ const SideNav = ({ getCurTime }) => {
                 <h1>{time}</h1>
             </div>
             <ul className="nav_list">
-                <li>
+                {/* <li>
                     <i class="bx bx-search" onClick={changeSearchClass}></i>
                     <input type="text" placeholder="Search..."></input>
                     <span class="tooltip">Search</span>
-                </li>
+                </li> */}
                 <li>
                     <Link to="/">
                         <i class='bx bx-menu-alt-left'></i>
