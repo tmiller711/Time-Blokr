@@ -74,12 +74,28 @@ const Calendar = ({ getCookie }) => {
         setShow(false)
     }
 
+    const deleteEvent = async (event) => {
+        let id = event.id
+        const csrftoken = getCookie('csrftoken');
+        const res = await fetch(`/api/deleteevent/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': csrftoken
+            }
+        })
+        if (res.ok) {
+            setAllEvents(allEvents.filter((event) => event.id !== id))
+        } else {
+            alert("Error deleting event")
+        }
+    }
+
     return (
         <div className="calendar-container">
             <Button variant="primary" name="add-event" onClick={handleShow}>Add Event</Button>
-            <BigCalendar localizer={localizer} events={allEvents} 
+            <BigCalendar localizer={localizer} events={allEvents} onDoubleClickEvent={deleteEvent}
             startAccessor="start" endAccessor="end" style={{height: "87vh", margin: "50px"}} />
-
+            {console.log(allEvents)}
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>

@@ -125,3 +125,14 @@ class Events(APIView):
             return Response(new_event_data, status=status.HTTP_201_CREATED)
 
         return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
+
+class DeleteEvent(APIView):
+    def delete(self, request, *args, **kwargs):
+        try:
+            id = self.kwargs['id']
+            event = Event(id=id)
+            event.delete()
+
+            return Response({"Success": "Deleted"}, status=status.HTTP_200_OK)
+        except:
+            return Response({"Error": "Unsuccessful"}, status=status.HTTP_400_BAD_REQUEST)
