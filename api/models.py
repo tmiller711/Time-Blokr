@@ -12,3 +12,13 @@ class Block(models.Model):
 
     def __str__(self):
         return self.topic
+
+
+class Event(models.Model):
+    user = models.ForeignKey(Account, on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    start = models.DateField()
+    end = models.DateField()
+
+    def __str__(self):
+        return self.title

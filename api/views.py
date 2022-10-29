@@ -8,8 +8,8 @@ from django.http import JsonResponse
 from datetime import timedelta, datetime
 import pytz
 
-from .serializers import BlocksSerializer, CreateBlocksSerializer
-from .models import Block
+from .serializers import BlocksSerializer, CreateBlocksSerializer, EventsSerializer
+from .models import Block, Event
 
 
 class GetBlocks(APIView):
@@ -100,5 +100,28 @@ class CreateBlock(APIView):
             end_time = end_time.strftime("%-I:%M%p")
             new_block_data['end_time'] = end_time
             return Response(new_block_data, status=status.HTTP_201_CREATED)
+
+        return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
+
+class Events(APIView):
+    serializer_class = EventsSerializer
+
+    def get(self, request, format=None):
+        events = Event.objects.filter(user=request.user)
+        data = EventsSerializer(events, many=True).data
+
+        return JsonResponse(data, safe=False, status=status.HTTP_200_OK)
+    
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            title = request.data['title']
+            start = request.data['start']
+            end = request.data['end']
+            new_event = Event(user=request.user, title=title, start=start, end=end)
+            new_event.save()
+            new_event_data = EventsSerializer(new_event).data
+            
+            return Response(new_event_data, status=status.HTTP_201_CREATED)
 
         return Response({"Error": "Invalid Data"}, status=status.HTTP_400_BAD_REQUEST)
