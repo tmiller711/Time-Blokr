@@ -156,6 +156,7 @@ def activate(request, uidb64, token):
 
     if user is not None and accounts_activation_token.check_token(user, token):
         user.is_active = True
+        print("activating")
         user.save()
         
         login(request, user)
@@ -177,6 +178,6 @@ def activate_email(request, user, to_email):
     })
     email = EmailMessage(mail_subject, message, to=[to_email])
     if email.send():
-        pass
+        print("email sent")
     else:
         return Response({'Bad Request': "Invalid Data..."}, status=status.HTTP_400_BAD_REQUEST)

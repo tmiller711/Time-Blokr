@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
-    # 'timeblokr.middleware.LoginRequiredMiddleware',
+    'timeblokr.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'timeblokr.urls'
@@ -145,12 +145,12 @@ LOGIN_URL = '/login'
 LOGIN_EXEMPT_URLS = (
     r'^logout/$',
     r'^register/$',
-    r'^activate/',
     r'^resend_confirmation/$',
     r'^password_reset/$',
     r'^reset/',
-    r'^api/loginaccount$',
-    r'^/api/registeraccount$',
+    r'^api/account/loginaccount$',
+    r'^api/account/registeraccount$',
+    r'^api/account/activate/',
 )
 
 # Default primary key field type
