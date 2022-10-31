@@ -24,7 +24,45 @@ const Pomodoro = ({getCookie}) => {
             setBreakLength(pomodoroSettings.break_length)
         }
 
-        getPomodoroSettings()
+        var loop;
+        if (workState == 'work' && workLength != '' && isTimer==true) {
+            let secondsLeft = toSecs(timer)
+            loop = setInterval(() => {
+                secondsLeft -= 1
+                setTimer(calcMinsSecs(secondsLeft))
+                if (secondsLeft == 0) {
+                    setTimer(calcMinsSecs(breakLength*60))
+                    setWorkState('break')
+                    setIsTimer(false)
+                    alarm()
+                    alert("Work is Over")
+                    clearInterval(loop)
+                }
+            }, 1000)
+        } else if (workState == 'break' && workLength != "0" && isTimer==true) {
+            let secondsLeft = breakLength*60
+            loop = setInterval(() => {
+                secondsLeft -= 1
+                setTimer(calcMinsSecs(secondsLeft))
+                if (secondsLeft == 0) {
+                    setTimer(calcMinsSecs(workLength*60))
+                    setWorkState('work')
+                    setIsTimer(false)
+                    alarm()
+                    alert("Break is Over")
+                    clearInterval(loop)
+                }
+        }, 1000)
+        }
+
+        // only run on startup
+        if (timer == '') {
+            getPomodoroSettings()
+        }
+        return(() => {
+            clearInterval(loop)
+            // reset the timer
+        })
     }, [workLength, isTimer])
 
     const handleClose = () => setShow(false);
@@ -67,57 +105,20 @@ const Pomodoro = ({getCookie}) => {
         return `${minutes}:${seconds}`
     }
 
-    function pomodoro() {
+    const toSecs = (time) => {
+        var minutes = time.split(':')[0]
+        var seconds = time.split(':')[1]
+        return parseInt(minutes*60)+parseInt(seconds)
+    }
+
+    const handleClick = () => {
         click()
-        if (workState == 'work' && workLength != '') {
+        if (isTimer == false) {
             setIsTimer(true)
-            let secondsLeft = workLength*60
-            startWork(secondsLeft)
-        } else if (workState == 'break' && breakLength != '0') {
-            setIsTimer(true)
-            let secondsLeft = breakLength*60
-            startBreak(secondsLeft)
+        } else {
+            setIsTimer(false)
         }
-
-    }
-
-    const startWork = (secondsLeft) => {
-        let loop = setInterval(() => {
-            secondsLeft -= 1
-            setTimer(calcMinsSecs(secondsLeft))
-            if (secondsLeft == 0) {
-                setTimer(calcMinsSecs(breakLength*60))
-                setWorkState('break')
-                setIsTimer(false)
-                alarm()
-                alert("Work is Over")
-                clearInterval(loop)
-            }
-        }, 1000)
-    }
-
-    const startBreak = (secondsLeft) => {
-        let loop = setInterval(() => {
-            secondsLeft -= 1
-            setTimer(calcMinsSecs(secondsLeft))
-            if (secondsLeft == 0) {
-                setTimer(calcMinsSecs(workLength*60))
-                setWorkState('work')
-                setIsTimer(false)
-                alarm()
-                alert("Break is Over")
-                clearInterval(loop)
-            }
-        }, 1000)
-    }
-
-    const resetPomodoro = () => {
-        click()
-        setIsTimer(false)
-        setWorkState('work')
-        setTimer(workLength)
-    }
-    
+    } 
 
     return (
         <>
@@ -125,8 +126,8 @@ const Pomodoro = ({getCookie}) => {
                 <p className="work-state">{workState}</p>
                 <p className='time-left'>{timer}</p>
             </div>
-            {isTimer == false ? <Button variant="primary" name="pomodoro-start" onClick={pomodoro}>Start</Button> : 
-                            <Button variant="primary" name="pomodoro-start" onClick={resetPomodoro}>Reset</Button>}
+            {isTimer == false ? <Button variant="primary" name="pomodoro-start" onClick={handleClick}>Start</Button> : 
+                            <Button variant="primary" name="pomodoro-start" onClick={handleClick}>Pause</Button>}
 
             <Button variant="primary" name="pomodoro-settings" onClick={handleShow}>Settings</Button>
 

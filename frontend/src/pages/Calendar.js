@@ -33,11 +33,9 @@ const Calendar = ({ getCookie }) => {
         const getEvents = async () => {
             let eventsFromServer = await fetchEvents()
             for (let i = 0; i < eventsFromServer.length; i++) {
-                console.log(eventsFromServer[i].start.replaceAll('-', '/'))
                 eventsFromServer[i].start = eventsFromServer[i].start.replaceAll('-', '/')
                 eventsFromServer[i].end = eventsFromServer[i].end.replaceAll('-', '/')
             }
-            console.log(eventsFromServer)
             setAllEvents(eventsFromServer)
         };
 
@@ -103,7 +101,6 @@ const Calendar = ({ getCookie }) => {
             <Button variant="primary" name="add-event" onClick={handleShow}>Add Event</Button>
             <BigCalendar localizer={localizer} events={allEvents} onDoubleClickEvent={deleteEvent}
             startAccessor="start" endAccessor="end" style={{height: "87vh", margin: "50px"}} />
-            {/* {console.log(allEvents)} */}
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
