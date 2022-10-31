@@ -27,10 +27,17 @@ const Calendar = ({ getCookie }) => {
     const [newEvent, setNewEvent] = useState({title: "", start: "", end: ""})
     const [allEvents, setAllEvents] = useState([])
     const [show, setShow] = useState(false);
+    const [locale, setLocale] = useState()
 
     useEffect(() => {
         const getEvents = async () => {
-            const eventsFromServer = await fetchEvents()
+            let eventsFromServer = await fetchEvents()
+            for (let i = 0; i < eventsFromServer.length; i++) {
+                console.log(eventsFromServer[i].start.replaceAll('-', '/'))
+                eventsFromServer[i].start = eventsFromServer[i].start.replaceAll('-', '/')
+                eventsFromServer[i].end = eventsFromServer[i].end.replaceAll('-', '/')
+            }
+            console.log(eventsFromServer)
             setAllEvents(eventsFromServer)
         };
 
@@ -59,13 +66,14 @@ const Calendar = ({ getCookie }) => {
             },
             body: JSON.stringify({
                 title: newEvent.title,
-                start: newEvent.start,
-                end: newEvent.end
+                start: newEvent.start.replaceAll('/', '-'),
+                end: newEvent.end.replaceAll('/', '-')
             })
         })
         if (res.ok) {
             const data = await res.json()
-            console.log(data)
+            data.start = data.start.replaceAll('-', '/')
+            data.end = data.end.replaceAll('-', '/')
             setAllEvents([...allEvents, data])
         } else {
             alert("Error adding event")
@@ -95,7 +103,7 @@ const Calendar = ({ getCookie }) => {
             <Button variant="primary" name="add-event" onClick={handleShow}>Add Event</Button>
             <BigCalendar localizer={localizer} events={allEvents} onDoubleClickEvent={deleteEvent}
             startAccessor="start" endAccessor="end" style={{height: "87vh", margin: "50px"}} />
-            {console.log(allEvents)}
+            {/* {console.log(allEvents)} */}
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -112,11 +120,11 @@ const Calendar = ({ getCookie }) => {
                             onChange={(e) => setNewEvent({...newEvent, title: e.target.value})}
                         />
                         <Form.Label>Start Date</Form.Label>
-                        <Form.Control type="date" name='date' placeholderText="Start Date" value={newEvent.start} 
-                        onChange={(start) => setNewEvent({...newEvent, start: start.target.value})} style={{marginRight: "10px"}} />
+                        <Form.Control type="date" name='date' value={newEvent.start.replaceAll('/', '-')} 
+                        onChange={(start) => setNewEvent({...newEvent, start: start.target.value.replaceAll('-', '/')})} style={{marginRight: "10px"}} />
                         <Form.Label>End Date</Form.Label>
-                        <Form.Control type="date" name='date' placeholderText="End Date" value={newEvent.end} 
-                        onChange={(end) => setNewEvent({...newEvent, end: end.target.value})} />
+                        <Form.Control type="date" name='date' value={newEvent.end.replaceAll('/', '-')} 
+                        onChange={(end) => setNewEvent({...newEvent, end: end.target.value.replaceAll('-', '/')})} />
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>

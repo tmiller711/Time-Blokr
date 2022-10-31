@@ -114,8 +114,10 @@ class Events(APIView):
     
     def post(self, request, format=None):
         serializer = self.serializer_class(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             title = request.data['title']
+
             start = request.data['start']
             end = request.data['end']
             new_event = Event(user=request.user, title=title, start=start, end=end)

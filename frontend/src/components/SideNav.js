@@ -44,47 +44,47 @@ const SideNav = ({ getCurTime }) => {
         <div className="sidenav">
             <div className="logo_content">
                 <div className="logo">
-                    <i class='bx bx-time' ></i>
+                    <i className='bx bx-time' ></i>
                     <div className="logo_name">TimeBlokr</div>
                 </div>
-                <i class='bx bx-menu' id="btn" onClick={changeSideNavClass}></i>
+                <i className='bx bx-menu' id="btn" onClick={changeSideNavClass}></i>
             </div>
             <div className="time">
                 <h1>{time}</h1>
             </div>
             <ul className="nav_list">
                 {/* <li>
-                    <i class="bx bx-search" onClick={changeSearchClass}></i>
+                    <i className="bx bx-search" onClick={changeSearchClass}></i>
                     <input type="text" placeholder="Search..."></input>
-                    <span class="tooltip">Search</span>
+                    <span className="tooltip">Search</span>
                 </li> */}
                 <li>
                     <Link to="/">
-                        <i class='bx bx-menu-alt-left'></i>
-                        <span class="links_name">Blocks</span>
+                        <i className='bx bx-menu-alt-left'></i>
+                        <span className="links_name">Blocks</span>
                     </Link>
-                    <span class="tooltip">Blocks</span>
+                    <span className="tooltip">Blocks</span>
                 </li>
                 <li>
                     <Link to="/calendar">
-                        <i class='bx bx-calendar'></i>
-                        <span class="links_name">Calendar</span>
+                        <i className='bx bx-calendar'></i>
+                        <span className="links_name">Calendar</span>
                     </Link>
-                    <span class="tooltip">Calendar</span>
+                    <span className="tooltip">Calendar</span>
                 </li>
                 <li>
                     <Link to="/profile">
-                        <i class="bx bx-user"></i>
-                        <span class="links_name">Profile</span>
+                        <i className="bx bx-user"></i>
+                        <span className="links_name">Profile</span>
                     </Link>
-                    <span class="tooltip">Profile</span>
+                    <span className="tooltip">Profile</span>
                 </li>
                 <li>
                     <Link to="/settings">
-                        <i class='bx bx-cog bx-flip-vertical' ></i>
-                        <span class="links_name">Settings</span>
+                        <i className='bx bx-cog bx-flip-vertical' ></i>
+                        <span className="links_name">Settings</span>
                     </Link>
-                    <span class="tooltip">Settings</span>
+                    <span className="tooltip">Settings</span>
                 </li>
             </ul>
             <div className="profile_content">
@@ -97,7 +97,7 @@ const SideNav = ({ getCurTime }) => {
                         </div>
                     </div>
                     <a href="/logout">
-                        <i class='bx bx-log-out' id="log_out" color="white"></i>
+                        <i className='bx bx-log-out' id="log_out" color="white"></i>
                     </a>
                 </div>
             </div>

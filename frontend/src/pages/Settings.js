@@ -8,7 +8,7 @@ const Settings = ({ getCookie }) => {
     const [timezone, setTimezone] = useState('')
     const [wakeUpTime, setWakeUpTime] = useState('')
     const [bedtime, setBedtime] = useState('')
-    const [validated, setValidated] = useState('')
+    const [validated, setValidated] = useState(false)
 
     useEffect(() => {
       const getAccountSettings = async () => {

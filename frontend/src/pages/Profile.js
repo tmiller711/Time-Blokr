@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 const Profile = ({ getCookie }) => {
     const [name, setName] = useState('')
     const [phoneNumber, setPhoneNumber] = useState('')
-    const [validated, setValidated] = useState('')
+    const [validated, setValidated] = useState(false)
 
     useEffect(() => {
         const getAccountProfile = async () => {

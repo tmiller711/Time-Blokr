@@ -15,4 +15,4 @@ class CreateBlocksSerializer(serializers.ModelSerializer):
 class EventsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('id', 'title', 'start', 'end')
+        fields = ('id', 'title', 'start', 'end', 'allDay')
