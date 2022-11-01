@@ -34,7 +34,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
-    'whitenoise.runserver_nostatic',
 
     'api.apps.ApiConfig',
     'frontend.apps.FrontendConfig',
@@ -43,7 +42,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -84,7 +82,7 @@ DATABASES = {
         'NAME': 'timeblokr', 
         'USER': 'postgres', 
         # make password an environ variable in prod
-        'PASSWORD': 'june302004',
+        'PASSWORD': os.environ["DB_PASS"],
         'HOST': '127.0.0.1', 
         'PORT': '5432',
     }
